@@ -3,22 +3,22 @@ import java.lang.Math;
 
 public class CreditCard{
     public static void main(String[] args){
-        user user1 = new user("admin", "user", 123456, 123098, "John", "Doe", "Non Binary", 99, "idontexist@gmail.com", 100000.00, "none");
+        user user1 = new user("admin", "user", 123456, 123098, "John", "Doe", "Male", 99, "idontexist@gmail.com", 100000.00, "none", "none");
+        choices(user1);
+        }
+
+    public static void choices(user user1){
         Scanner input = new Scanner(System.in);
         System.out.println("1: Credit Card");
         System.out.println("2: Debit Card");
         int choice = input.nextInt();
         if(choice == 1){
-            //creditcard(user1);
             stringconverter(user1);
         }
         if(choice == 2){
-            //debitcard(user1);
             stringconverter(user1);
         }
     }
-
-
     public static void stringconverter(user user1){
         String numberstring = user1.getNumber();
         if(numberstring.equals("none")){
@@ -45,16 +45,36 @@ public class CreditCard{
             int number = (int)(Math.random() * 9) + 0;
             numberstring += number;
             user1.setNumber(numberstring);
-            creditcard(user1, numberstring);
+            expconverter(user1, numberstring);
         }
         else{
-            //creditcard(user1, numberstring);
-            System.out.println("It works!");
+            expconverter(user1, numberstring);
+        }
+    }
+
+    public static void expconverter(user user1, String numberstring){
+        String expstring = user1.getExpDate();
+        if(expstring.equals("none")){
+            expstring = "";
+            int number = (int)(Math.random() * 11) + 1;
+            if(number < 10){
+                expstring += "0" + number + " ";
+            }
+            else{
+                expstring += number + " ";
+            }
+            number = (int)(Math.random() * 5) + 23;
+            expstring += "/ " + number;
+            user1.setExpDate(expstring);
+            creditcard(user1, numberstring, expstring);
+        }
+        else{
+            creditcard(user1, numberstring, expstring);
         }
     }
 
 
-    public static void creditcard(user user1, String numberstring){
+    public static void creditcard(user user1, String numberstring, String expstring){
         for(int i = 0; i < 14; i++){
             if(i == 0 || i == 3 || i == 4 || i == 8 || i == 10 || i == 13){
                 System.out.println("|::::::::::::::::::::::::::::::::::::::::::::::::::::::::::|");
@@ -75,7 +95,7 @@ public class CreditCard{
                 System.out.println("|:::[" + numberstring + "]:::::::::::::|");
             }
             if(i == 11){
-                System.out.println("|:::::::::::::::::::::::::::::::::::[EXPIRES]:[0 3 / 1 2]::|");
+                System.out.println("|:::::::::::::::::::::::::::::::::::[EXPIRES]:[" + expstring + "]::|");
             }
             if(i == 12){
                 System.out.println("|:::[J o h n    D    S m i t h]:::::[END]::::::::::::::::::|");
@@ -105,7 +125,7 @@ public class CreditCard{
         System.out.println("Press 2 to sign out");
         int choice = input.nextInt();
         if(choice == 1){
-            main(null);
+            choices(user1);
         }
         else if(choice == 2){
             return;
@@ -163,7 +183,7 @@ public class CreditCard{
         System.out.println("Press 2 to sign out");
         int choice = input.nextInt();
         if(choice == 1){
-            main(null);
+            choices(user1);
         }
         else if(choice == 2){
             return;
@@ -183,6 +203,7 @@ class user{
     private String email;
     private double balance;
     private String creditcardnumber;
+    private String expdate;
 
     public user(){
         username = "";
@@ -196,9 +217,10 @@ class user{
         email = "";
         balance = 0;
         creditcardnumber = "";
+        expdate = "";
     }
 
-    public user(String a, String b, int c, int d, String e, String f, String g, int h, String i, double j, String k){
+    public user(String a, String b, int c, int d, String e, String f, String g, int h, String i, double j, String k, String l){
         username = a;
         password = b;
         accountnumber = c;
@@ -210,6 +232,7 @@ class user{
         email = i;
         balance = j;
         creditcardnumber = k;
+        expdate = l;
     }
 
     public String getNumber(){
@@ -218,5 +241,13 @@ class user{
 
     public void setNumber(String k){
         creditcardnumber = k;
+    }
+
+    public String getExpDate(){
+        return expdate;
+    }
+
+    public void setExpDate(String l){
+        expdate = l;
     }
 }
