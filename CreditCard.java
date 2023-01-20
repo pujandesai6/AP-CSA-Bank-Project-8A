@@ -11,6 +11,9 @@ public class CreditCard{
         Scanner input = new Scanner(System.in);
         System.out.println("1: Credit Card");
         System.out.println("2: Debit Card");
+        System.out.println("3: Credit Card Statement");
+        System.out.print("Enter option: ");
+
         int choice = input.nextInt();
         if(choice == 1){
             stringconverter(user1);
@@ -18,7 +21,33 @@ public class CreditCard{
         if(choice == 2){
             stringconverter(user1);
         }
+        if(choice == 3){
+            statement(user1);
+        }
     }
+    public static void statement(user user1){
+        int transactions = 4;
+        int balance = user1.getBalance();
+        System.out.println("Recent Transactions");
+        System.out.println("");
+        System.out.println("|     Type       |      Paid In      |      Paid Out      |      Balance      |");
+        System.out.println("|----------------|-------------------|--------------------|-------------------|");
+        for(int i = 0; i < transactions; i++){
+            System.out.println("|" + type + "|" + paidin + "|" + paidout + "|" + balance +"|");
+            System.out.println("|----------------|-------------------|--------------------|-------------------|");
+        }
+        Scanner input = new Scanner(System.in);
+        System.out.println("Press 1 to return home");
+        System.out.println("Press 2 to sign out");
+        int choice = input.nextInt();
+        if(choice == 1){
+            choices(user1);
+        }
+        else if(choice == 2){
+            return;
+        }
+    }
+
     public static void stringconverter(user user1){
         String numberstring = user1.getNumber();
         if(numberstring.equals("none")){
@@ -51,7 +80,7 @@ public class CreditCard{
             expconverter(user1, numberstring);
         }
     }
-
+        //Generates card number and exp date if not present already)
     public static void expconverter(user user1, String numberstring){
         String expstring = user1.getExpDate();
         if(expstring.equals("none")){
@@ -73,7 +102,7 @@ public class CreditCard{
             cvvgenerator(user1, numberstring, expstring);
         }
     }
-
+        //Generates CVV if not present
     public static void cvvgenerator(user user1, String numberstring, String expstring){
         String cvv = user1.getCvv();
         if(cvv.equals("none")){
@@ -90,6 +119,7 @@ public class CreditCard{
         }
     }
 
+        //Prints Credit Card with users numbers
     public static void creditcard(user user1, String numberstring, String expstring, String cvv){
         for(int i = 0; i < 14; i++){
             if(i == 0 || i == 3 || i == 4 || i == 8 || i == 10 || i == 13){
@@ -276,5 +306,13 @@ class user{
 
     public void setCvv(String m){
         cvvnumber = m;
+    }
+
+    public String getBalance(){
+        return balance;
+    }
+
+    public void setBalance(double j){
+        balance = j;
     }
 }
