@@ -3,53 +3,110 @@ import java.lang.Math;
 
 public class CreditCard{
     public static void main(String[] args){
-        user user1 = new user("admin", "user", 123456, 123098, "John", "Doe", "Male", 99, "idontexist@gmail.com", 100000.00, "none", "none", "none");
-        choices(user1);
-        }
+        user user1 = new user("admin", "user", 123456, 123098, "Harshit", "Patel", "Male", 99, "idontexist@gmail.com", 100000.00, "none", "none", "none", "Donald", "none", "none", "none");
+        variables(user1);
+    }
 
-    public static void choices(user user1){
+    public static void variables(user user1){
+        String name = name(user1);
+        String creditcardnumber = numbergenerator(user1, 0);
+        String debitcardnumber = numbergenerator(user1, 1);
+        String creditcardexp = expgenerator(user1, 0);
+        String debitcardexp = expgenerator(user1, 1);
+        String creditcardcvv = cvvgenerator(user1, 0);
+        String debitcardcvv = cvvgenerator(user1, 1);
+        choices(user1, name, creditcardnumber, debitcardnumber, creditcardexp, debitcardexp, creditcardcvv, debitcardcvv);
+    }
+
+    public static void choices(user user1, String name, String creditcardnumber, String debitcardnumber, String creditcardexp, String debitcardexp, String creditcardcvv, String debitcardcvv){
         Scanner input = new Scanner(System.in);
         System.out.println("1: Credit Card");
         System.out.println("2: Debit Card");
         System.out.println("3: Credit Card Statement");
         System.out.print("Enter option: ");
-
         int choice = input.nextInt();
         if(choice == 1){
-            stringconverter(user1);
+            creditcard(user1, name, creditcardnumber, creditcardexp, creditcardcvv);
         }
         if(choice == 2){
-            stringconverter(user1);
+            debitcard(user1, name, debitcardnumber, debitcardexp, debitcardcvv);
         }
         if(choice == 3){
             statement(user1);
         }
     }
-    public static void statement(user user1){
-        int transactions = 4;
-        int balance = user1.getBalance();
-        System.out.println("Recent Transactions");
-        System.out.println("");
-        System.out.println("|     Type       |      Paid In      |      Paid Out      |      Balance      |");
-        System.out.println("|----------------|-------------------|--------------------|-------------------|");
-        for(int i = 0; i < transactions; i++){
-            System.out.println("|" + type + "|" + paidin + "|" + paidout + "|" + balance +"|");
-            System.out.println("|----------------|-------------------|--------------------|-------------------|");
+
+    public static String name(user user1){
+        String firstname = user1.getFirstName();
+        String lastname = user1.getLastName();
+        String middlename = user1.getMiddileInitial();
+        String name = "[" + firstname.charAt(0);
+        for(int i = 1; i < firstname.length(); i++){
+            name += " " + firstname.charAt(i);
         }
-        Scanner input = new Scanner(System.in);
-        System.out.println("Press 1 to return home");
-        System.out.println("Press 2 to sign out");
-        int choice = input.nextInt();
-        if(choice == 1){
-            choices(user1);
+        name += "    ";
+        if(middlename.equals("none")){
+            name += "";
         }
-        else if(choice == 2){
-            return;
+        else{
+            name += "" + middlename.charAt(0);
+            name += "   ";
         }
+        for(int i = 0; i < lastname.length(); i++){
+            name += " " + lastname.charAt(i);
+        }
+        if(name.length() == 26){
+            name += "]";
+            return name;
+        }
+        if(name.length() < 26){
+            int extrachar = 26 - name.length();
+            name += "]";
+            for(int i = 0; i < extrachar; i++){
+                name += ":";
+            }
+            return name;
+        }
+        if(name.length() > 26){
+            int spaces = name.indexOf("    ");
+            int excess = name.length() - 26;
+            String replacement = "";
+            if(excess >= 4){
+                int index = name.indexOf("    ");
+                index += 4;
+                char s = name.charAt(index);
+                String str = Character.toString(s);
+                name.replace(str, "");
+                if(excess % 2 == 0){
+                    excess = excess /2;
+                    for(int i = 0; i < (4 - excess); i++){
+                        replacement += " ";
+                    }
+                    name.replace("    ", replacement);
+                    name += "]";
+                }
+                else{
+                    excess = (excess - 1) /2;
+                    for(int i = 0; i < (4 - excess); i++){
+                        replacement += " ";
+                    }
+                    name.replace("    ", replacement);
+                    name += "]";
+                }
+            }
+            return name;
+        }
+        return name;
     }
 
-    public static void stringconverter(user user1){
-        String numberstring = user1.getNumber();
+    public static String numbergenerator(user user1, int a){
+        String numberstring = "";
+        if(a == 0){
+            numberstring = user1.getCreditCardNumber();
+        }
+        else{
+            numberstring = user1.getDebitCardNumber();
+        }
         if(numberstring.equals("none")){
             numberstring = "";
             for(int i = 0; i < 4; i++){
@@ -73,16 +130,26 @@ public class CreditCard{
             }
             int number = (int)(Math.random() * 9) + 0;
             numberstring += number;
-            user1.setNumber(numberstring);
-            expconverter(user1, numberstring);
+            if(a == 0){
+                user1.setCreditCardNumber(numberstring);
+            }
+            else{
+                user1.setDebitCardNumber(numberstring);
+            }
+            return numberstring;
         }
         else{
-            expconverter(user1, numberstring);
+            return numberstring;
         }
     }
-        //Generates card number and exp date if not present already)
-    public static void expconverter(user user1, String numberstring){
-        String expstring = user1.getExpDate();
+    public static String expgenerator(user user1, int a){
+        String expstring = "";
+        if(a == 0){
+            expstring = user1.getCreditCardExp();
+        }
+        else{
+            expstring = user1.getDebitCardExp();
+        }
         if(expstring.equals("none")){
             expstring = "";
             int number = (int)(Math.random() * 1) + 0;
@@ -94,33 +161,70 @@ public class CreditCard{
             }
             number = (int)(Math.random() * 4) + 5;
             expstring += "/ 2 " + number;
-            user1.setExpDate(expstring);
-            //creditcard(user1, numberstring, expstring);
-            cvvgenerator(user1, numberstring, expstring);
+            if(a == 0){
+                user1.setCreditCardExp(expstring);
+            }
+            else{
+                user1.setDebitCardExp(expstring);
+            }
+            return expstring;
         }
         else{
-            cvvgenerator(user1, numberstring, expstring);
+            return expstring;
         }
     }
         //Generates CVV if not present
-    public static void cvvgenerator(user user1, String numberstring, String expstring){
-        String cvv = user1.getCvv();
+    public static String cvvgenerator(user user1,int a){
+        String cvv = "";
+        if(a == 0){
+            cvv = user1.getCreditCardCvv();
+        }
+        else{
+            cvv = user1.getDebitCardCvv();
+        }
         if(cvv.equals("none")){
             cvv = " ";
             for(int i = 0; i < 3; i++){
                 int number = (int)(Math.random() * 9);
                 cvv += number + " ";
             }
-            user1.setCvv(cvv);
-            creditcard(user1, numberstring, expstring, cvv);
+            if(a == 0){
+                user1.setCreditCardCvv(cvv);
+            }
+            else{
+                user1.setDebitCardCvv(cvv);
+            }
+            return cvv;
         }
         else{
-            creditcard(user1, numberstring, expstring, cvv);
+            return cvv;
         }
     }
 
+    public static void statement(user user1){
+        int transactions = 4;
+        int balance = user1.getBalance();
+        System.out.println("Recent Transactions");
+        System.out.println("");
+        System.out.println("|     Type       |      Paid In      |      Paid Out      |      Balance      |");
+        System.out.println("|----------------|-------------------|--------------------|-------------------|");
+        for(int i = 0; i < transactions; i++){
+            System.out.println("|" + type + "|" + paidin + "|" + paidout + "|" + balance +"|");
+            System.out.println("|----------------|-------------------|--------------------|-------------------|");
+        }
+        Scanner input = new Scanner(System.in);
+        System.out.println("Press 1 to return home");
+        System.out.println("Press 2 to sign out");
+        int choice = input.nextInt();
+        if(choice == 1){
+            choices(user1);
+        }
+        else if(choice == 2){
+            return;
+        }
+    }
         //Prints Credit Card with users numbers
-    public static void creditcard(user user1, String numberstring, String expstring, String cvv){
+    public static void creditcard(user user1, String name, String creditcardnumber, String creditcardexp, String creditcardcvv){
         for(int i = 0; i < 14; i++){
             if(i == 0 || i == 3 || i == 4 || i == 8 || i == 10 || i == 13){
                 System.out.println("|::::::::::::::::::::::::::::::::::::::::::::::::::::::::::|");
@@ -138,13 +242,13 @@ public class CreditCard{
                 System.out.println("|:::|########|:::::::::::::::::::::::::::::::::::::::::::::|");
             }
             if(i == 9){
-                System.out.println("|:::[" + numberstring + "]:::::::::::::|");
+                System.out.println("|:::[" + creditcardnumber + "]:::::::::::::|");
             }
             if(i == 11){
-                System.out.println("|:::::::::::::::::::::::::::::::::::[EXPIRES]:[" + expstring + "]::|");
+                System.out.println("|:::::::::::::::::::::::::::::::::::[EXPIRES]:[" + creditcardexp + "]::|");
             }
             if(i == 12){
-                System.out.println("|:::[J o h n    D    S m i t h]:::::[END]::::::::::::::::::|");
+                System.out.println("|:::" + name + ":::::[END]::::::::::::::::::|");
             }
         }
 
@@ -163,7 +267,7 @@ public class CreditCard{
                 System.out.println("|                                          |::::| C V V |::|");
             }
             if(k == 7){
-                System.out.println("|                                          |::::|" + cvv + "|::|");
+                System.out.println("|                                          |::::|" + creditcardcvv + "|::|");
             }
         }
         Scanner input = new Scanner(System.in);
@@ -171,14 +275,14 @@ public class CreditCard{
         System.out.println("Press 2 to sign out");
         int choice = input.nextInt();
         if(choice == 1){
-            choices(user1);
+            variables(user1);
         }
         else if(choice == 2){
             return;
         }
     }
 
-    public static void debitcard(user user1, String numberstring, String cvv){
+    public static void debitcard(user user1, String name, String debitcardnumber, String debitcardexp, String debitcardcvv){
         for(int i = 0; i < 14; i++){
             if(i == 0 || i == 3 || i == 4 || i == 8 || i == 10 || i == 13){
                 System.out.println("|::::::::::::::::::::::::::::::::::::::::::::::::::::::::::|");
@@ -196,13 +300,13 @@ public class CreditCard{
                 System.out.println("|:::|########|:::::::::::::::::::::::::::::::::::::::::::::|");
             }
             if(i == 9){
-                System.out.println("|:::[" + numberstring + "]:::::::::::::|");
+                System.out.println("|:::[" + debitcardnumber + "]:::::::::::::|");
             }
             if(i == 11){
-                System.out.println("|:::::::::::::::::::::::::::::::::::[EXPIRES]:[0 3 / 1 2]::|");
+                System.out.println("|:::::::::::::::::::::::::::::::::::[EXPIRES]:[" + debitcardexp + "]::|");
             }
             if(i == 12){
-                System.out.println("|:::[J o h n    D    S m i t h]:::::[END]::::::::::::::::::|");
+                System.out.println("|:::[" + name + "]:::::[END]::::::::::::::::::|");
             }
         }
 
@@ -221,7 +325,7 @@ public class CreditCard{
                 System.out.println("|                                          |::::| C V V |::|");
             }
             if(k == 7){
-                System.out.println("|                                          |::::| 9 8 8 |::|");
+                System.out.println("|                                          |::::|" + debitcardcvv + "|::|");
             }
         }
         Scanner input = new Scanner(System.in);
@@ -229,7 +333,7 @@ public class CreditCard{
         System.out.println("Press 2 to sign out");
         int choice = input.nextInt();
         if(choice == 1){
-            choices(user1);
+            variables(user1);
         }
         else if(choice == 2){
             return;
@@ -249,8 +353,12 @@ class user{
     private String email;
     private double balance;
     private String creditcardnumber;
-    private String expdate;
-    private String cvvnumber;
+    private String creditcardexp;
+    private String creditcardcvv;
+    private String middleinitial;
+    private String debitcardnumber;
+    private String debitcardexp;
+    private String debitcardcvv;
 
     public user(){
         username = "";
@@ -264,11 +372,15 @@ class user{
         email = "";
         balance = 0;
         creditcardnumber = "";
-        expdate = "";
-        cvvnumber = "";
+        creditcardexp = "";
+        creditcardcvv = "";
+        middleinitial = "";
+        debitcardnumber = "";
+        debitcardexp = "";
+        debitcardcvv = "";
     }
 
-    public user(String a, String b, int c, int d, String e, String f, String g, int h, String i, double j, String k, String l, String m){
+    public user(String a, String b, int c, int d, String e, String f, String g, int h, String i, double j, String k, String l, String m, String n, String o, String p, String q){
         username = a;
         password = b;
         accountnumber = c;
@@ -280,32 +392,60 @@ class user{
         email = i;
         balance = j;
         creditcardnumber = k;
-        expdate = l;
-        cvvnumber = m;
+        creditcardexp = l;
+        creditcardcvv = m;
+        middleinitial = n;
+        debitcardnumber = o;
+        debitcardexp = p;
+        debitcardcvv = q;
     }
 
-    public String getNumber(){
+    public String getCreditCardNumber(){
         return creditcardnumber;
     }
 
-    public void setNumber(String k){
+    public void setCreditCardNumber(String k){
         creditcardnumber = k;
     }
 
-    public String getExpDate(){
-        return expdate;
+    public String getDebitCardNumber(){
+        return debitcardnumber;
     }
 
-    public void setExpDate(String l){
-        expdate = l;
+    public void setDebitCardNumber(String o){
+        debitcardnumber = o;
     }
 
-    public String getCvv(){
-        return cvvnumber;
+    public String getCreditCardExp(){
+        return creditcardexp;
     }
 
-    public void setCvv(String m){
-        cvvnumber = m;
+    public void setCreditCardExp(String l){
+        creditcardexp = l;
+    }
+
+    public String getDebitCardExp(){
+        return debitcardexp;
+    }
+
+    public void setDebitCardExp(String p){
+        debitcardexp = p;
+    }
+    
+    public String getCreditCardCvv(){
+        return creditcardcvv;
+    }
+
+    public void setCreditCardCvv(String m){
+        creditcardcvv = m;
+    }
+
+    public String getDebitCardCvv(){
+        return debitcardcvv;
+    }
+
+    public void setDebitCardCvv(String q){
+        debitcardcvv = q;
     }
 
     public String getBalance(){
@@ -314,5 +454,17 @@ class user{
 
     public void setBalance(double j){
         balance = j;
+    }
+
+    public String getFirstName(){
+        return firstname;
+    }
+
+    public String getLastName(){
+        return lastname;
+    }
+
+    public String getMiddileInitial(){
+        return middleinitial;
     }
 }
