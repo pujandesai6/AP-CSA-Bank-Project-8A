@@ -192,7 +192,7 @@ public class CreditCard{
                 int number = (int)(Math.random() * 9);
                 cvv += number + " ";
             }
-            if(a == 0){
+            if(a == 0){  
                 user1.setCreditCardCvv(cvv);
             }
             else{
@@ -206,40 +206,21 @@ public class CreditCard{
     }
 
     public static void statement(user user1){
-        /*int transactions = 4;
-        String[] types = {"Withdrawl", "Deposit", "Transfer"};
-        double balance = user1.getBalance();
-        double paidin = 101.25;
-        double paidout = 12333.24;
-        System.out.println("Recent Transactions");
-        System.out.println("");
-        System.out.println("|     Type       |      Paid In      |      Paid Out      |      Balance      |");
-        System.out.println("|----------------|-------------------|--------------------|-------------------|");
-        for(int i = 0; i < transactions; i++){
-            String type = types[(int)(Math.random() * 2)];
-            System.out.println("|" + type + "|" + paidin + "|" + paidout + "|" + balance +"|");
-            System.out.println("|----------------|-------------------|--------------------|-------------------|");
-        }
-        Scanner input = new Scanner(System.in);
-        System.out.println("Press 1 to return home");
-        System.out.println("Press 2 to sign out");
-        int choice = input.nextInt();
-        if(choice == 1){
-            variables(user1);
-        }
-        else if(choice == 2){
-            return;
-        }*/
         JFrame frame = new JFrame();
- 
-        String[] columnNames = {"Date", "Type", "Paidin "};
- 
+        String[] columnNames = {"Date", "Type", "Paidin", "Paidout", "Balance"};
+        String[] type = {"Transfer", "Deposit", "Withdrawl"};
+        double balance = user1.getBalance();
         Object[][] data = {
-            {"Ken", new Integer(5), new Boolean(false)},
-            {"Tom", new Integer(3), new Boolean(true)},
-            {"Susam", new Integer(2), new Boolean(false)},
-            {"Mark",new Integer(20), new Boolean(true)},
-            {"Joe", new Integer(10), new Boolean(false)}
+            {"Date", "Date", "Type", "Paid In", "Paid Out", "Balance"},
+            {"11/11/2023", "Deposit", "$10.09", "", balance + 10.99},
+            {"12/20/2023", "Transfer", "", "$1301.53", balance + 10.99 - 1301.53},
+            {"12/23/2023", "Transfer", "", "13.19", balance + 10.99 - 1301.53 - 13.19},
+            {"1/01/2023", "Deposit", "$11.99", "", balance + 10.99 - 1301.53 - 13.19 + 11.99},
+            {"1/09/2023", "Withdrawl", "", "$1999.88", balance + 10.99 - 1301.53 - 13.19 + 11.99 - 1999.88},
+            {"1/21/2023", "Deposit", "$20112.00", "", balance + 10.99 - 1301.53 - 13.19 + 11.99 - 1999.88 + 20112},
+            {"2/01/2023", "Deposit", "$1000.00", "", balance + 10.99 - 1301.53 - 13.19 + 11.99 - 1999.88 + 20112 + 1000},
+            {"2/10/2023", "Withdrawl", "", "$1.98", balance + 10.99 - 1301.53 - 13.19 + 11.99 - 1999.88 + 20112 + 1000 - 1.98},
+            {"2/11/2023", "Transfer", "", "7.99", balance + 10.99 - 1301.53 - 13.19 + 11.99 - 1999.88 + 20112 + 1000 - 1.98 - 7.99}
         };
         JTable table = new JTable(data, columnNames);
         frame.add(table);
