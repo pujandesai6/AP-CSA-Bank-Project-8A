@@ -50,6 +50,7 @@ public class UserMenu
     
     	if ( answer == 1)
     	{
+    		System.out.print("1 works");
     		//lead to login code
     	}
     	else if ( answer == 2)
@@ -59,7 +60,7 @@ public class UserMenu
     	}
     	else 
     	{
-    		main(null);
+    		login();
     	}
     }
 }
