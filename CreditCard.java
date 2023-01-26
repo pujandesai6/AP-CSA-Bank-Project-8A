@@ -1,9 +1,12 @@
 import java.util.Scanner;
 import java.lang.Math;
+import javax.swing.*;
+import javax.swing.table.*;
+import java.awt.*;
 
 public class CreditCard{
     public static void main(String[] args){
-        user user1 = new user("admin", "user", 123456, 123098, "Harshit", "Patel", "Male", 99, "idontexist@gmail.com", 100000.00, "none", "none", "none", "Donald", "none", "none", "none");
+        user user1 = new user("admin", "user", 123456, 123098, "John", "Doe", "Male", 99, "idontexist@gmail.com", 100000.00, "none", "none", "none", "Edward", "none", "none", "none");
         variables(user1);
     }
 
@@ -20,9 +23,9 @@ public class CreditCard{
 
     public static void choices(user user1, String name, String creditcardnumber, String debitcardnumber, String creditcardexp, String debitcardexp, String creditcardcvv, String debitcardcvv){
         Scanner input = new Scanner(System.in);
-        System.out.println("1: Credit Card");
-        System.out.println("2: Debit Card");
-        System.out.println("3: Credit Card Statement");
+        System.out.println("1. Credit Card");
+        System.out.println("2. Debit Card");
+        System.out.println("3. Credit Card Statement");
         System.out.print("Enter option: ");
         int choice = input.nextInt();
         if(choice == 1){
@@ -55,43 +58,44 @@ public class CreditCard{
         for(int i = 0; i < lastname.length(); i++){
             name += " " + lastname.charAt(i);
         }
-        if(name.length() == 26){
-            name += "]";
+        name += "]";
+        if(name.length() == 30){
             return name;
         }
-        if(name.length() < 26){
-            int extrachar = 26 - name.length();
-            name += "]";
+        if(name.length() < 30){
+            int extrachar = 30 - name.length();
             for(int i = 0; i < extrachar; i++){
                 name += ":";
             }
             return name;
         }
-        if(name.length() > 26){
-            int spaces = name.indexOf("    ");
-            int excess = name.length() - 26;
-            String replacement = "";
-            if(excess >= 4){
-                int index = name.indexOf("    ");
-                index += 4;
-                char s = name.charAt(index);
-                String str = Character.toString(s);
-                name.replace(str, "");
-                if(excess % 2 == 0){
-                    excess = excess /2;
-                    for(int i = 0; i < (4 - excess); i++){
-                        replacement += " ";
-                    }
-                    name.replace("    ", replacement);
-                    name += "]";
+        if(name.length() > 27){
+            int excess =  name.length() - 27;
+            System.out.println(excess);
+            if(excess < 4)
+            {
+                excess = 3 - excess;
+                for(int i = 0; i < excess; i++){
+                    name += ":";
                 }
-                else{
-                    excess = (excess - 1) /2;
-                    for(int i = 0; i < (4 - excess); i++){
-                        replacement += " ";
+            }
+            else{
+                name = "[" + firstname.charAt(0);
+                for(int i = 1; i < firstname.length(); i++){
+                name += " " + firstname.charAt(i);
+                }
+                name += "   ";
+                for(int i = 0; i < lastname.length(); i++){
+                    name += " " + lastname.charAt(i);
+                }
+                name += "]";
+                excess =  name.length() - 27;
+                if(excess < 4)
+                {   
+                    excess = 3 - excess;
+                    for(int i = 0; i < excess; i++){
+                        name += ":";
                     }
-                    name.replace("    ", replacement);
-                    name += "]";
                 }
             }
             return name;
@@ -202,13 +206,17 @@ public class CreditCard{
     }
 
     public static void statement(user user1){
-        int transactions = 4;
-        int balance = user1.getBalance();
+        /*int transactions = 4;
+        String[] types = {"Withdrawl", "Deposit", "Transfer"};
+        double balance = user1.getBalance();
+        double paidin = 101.25;
+        double paidout = 12333.24;
         System.out.println("Recent Transactions");
         System.out.println("");
         System.out.println("|     Type       |      Paid In      |      Paid Out      |      Balance      |");
         System.out.println("|----------------|-------------------|--------------------|-------------------|");
         for(int i = 0; i < transactions; i++){
+            String type = types[(int)(Math.random() * 2)];
             System.out.println("|" + type + "|" + paidin + "|" + paidout + "|" + balance +"|");
             System.out.println("|----------------|-------------------|--------------------|-------------------|");
         }
@@ -217,12 +225,30 @@ public class CreditCard{
         System.out.println("Press 2 to sign out");
         int choice = input.nextInt();
         if(choice == 1){
-            choices(user1);
+            variables(user1);
         }
         else if(choice == 2){
             return;
-        }
-    }
+        }*/
+        JFrame frame = new JFrame();
+ 
+        String[] columnNames = {"Date", "Type", "Paidin "};
+ 
+        Object[][] data = {
+            {"Ken", new Integer(5), new Boolean(false)},
+            {"Tom", new Integer(3), new Boolean(true)},
+            {"Susam", new Integer(2), new Boolean(false)},
+            {"Mark",new Integer(20), new Boolean(true)},
+            {"Joe", new Integer(10), new Boolean(false)}
+        };
+        JTable table = new JTable(data, columnNames);
+        frame.add(table);
+        frame.setSize(400,400);
+        frame.setLocationRelativeTo(null);  
+        frame.setVisible(true);
+        System.out.println("Statement has been opened in a new tab.");
+        variables(user1);
+    }   
         //Prints Credit Card with users numbers
     public static void creditcard(user user1, String name, String creditcardnumber, String creditcardexp, String creditcardcvv){
         for(int i = 0; i < 14; i++){
@@ -248,7 +274,7 @@ public class CreditCard{
                 System.out.println("|:::::::::::::::::::::::::::::::::::[EXPIRES]:[" + creditcardexp + "]::|");
             }
             if(i == 12){
-                System.out.println("|:::" + name + ":::::[END]::::::::::::::::::|");
+                System.out.println("|:::" + name + "::[END]::::::::::::::::::|");
             }
         }
 
@@ -306,7 +332,7 @@ public class CreditCard{
                 System.out.println("|:::::::::::::::::::::::::::::::::::[EXPIRES]:[" + debitcardexp + "]::|");
             }
             if(i == 12){
-                System.out.println("|:::[" + name + "]:::::[END]::::::::::::::::::|");
+                System.out.println("|:::" + name + "::[END]::::::::::::::::::|");
             }
         }
 
@@ -448,7 +474,7 @@ class user{
         debitcardcvv = q;
     }
 
-    public String getBalance(){
+    public double getBalance(){
         return balance;
     }
 
