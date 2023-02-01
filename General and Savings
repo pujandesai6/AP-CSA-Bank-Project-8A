@@ -3,20 +3,6 @@ Ashley, Sebastian, Ravi
 General Account and Savings Account
 */
 
-import java.lang.Math;
-import java.util.Scanner;
-import java.util.ArrayList;
-
-public class TestClass {
-    public static void main(String args[]) {
-        SavingsAccount.askQues();
-        System.out.println();
-        SavingsAccount.testDisplay();
-        //System.out.print(SavingsAccount.printList());
-    }
-}
-
-
 class GeneralAccount
 {
     private String accountName;
