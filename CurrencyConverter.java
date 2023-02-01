@@ -68,54 +68,14 @@ public class CurrencyConverter
 
         double convertedAmount = 0.0;
         
-        switch (currencyChoice) {
-            case 1 :
-                convertedAmount = amountInDollars * 0.92;
-                break;
-            case 2 :
-                convertedAmount = amountInDollars * 0.81;
-                break;
-            case 3 :
-                convertedAmount = amountInDollars * 129.27;
-                break;
-            case 4 :
-                convertedAmount = amountInDollars * 0.92;
-                break;
-            case 5 :
-                convertedAmount = amountInDollars * 0.75;
-                break;
-            case 6 :
-                convertedAmount = amountInDollars * 1.41;
-                break;
-            case 7 :
-                convertedAmount = amountInDollars * 1.55;
-                break;
-            case 8 :
-                convertedAmount = amountInDollars * 1.31;
-                break;
-            case 9 :
-                convertedAmount = amountInDollars * 7.84;
-                break;
-            case 10 :
-                convertedAmount = amountInDollars * 6.74;
-                break;
-            case 11 :
-                convertedAmount = amountInDollars * 81.88;
-                break;
-            case 12 :
-                convertedAmount = amountInDollars * 1500.60;
-                break;
-            case 13 :
-                convertedAmount = amountInDollars * 4.27;
-                break;
-            case 14 :
-                convertedAmount = amountInDollars * 54.47;
-                break;
-            case 15 :
-                convertedAmount = amountInDollars * 32.96;
-                break;
+        double[] conversions = {0, 0.92, 0.81, 129.27, 0.92, 0.75, 1.41, 1.55, 1.31, 7.81, 6.74, 81.88, 1500.60, 4.27, 54.47, 32.96 };
+        if (currencyChoice > 0 && currencyChoice < 15) {
+        	convertedAmount = conversions[currencyChoice] * amountInDollars;
+        	System.out.println("Your converted amount is: " + (double) Math.round(convertedAmount * 1000) / 1000);
         }
-        System.out.println("Your converted amount is: " + (double) Math.round(convertedAmount * 1000) / 1000);
+        else {
+        	System.out.println("Error. Please enter a valid number from the list above.");
+        }
       
     }
 }
