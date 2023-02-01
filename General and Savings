@@ -1,0 +1,210 @@
+/*
+Ashley, Sebastian, Ravi
+General Account and Savings Account
+*/
+
+import java.lang.Math;
+import java.util.Scanner;
+import java.util.ArrayList;
+
+public class TestClass {
+    public static void main(String args[]) {
+        SavingsAccount.askQues();
+        System.out.println();
+        SavingsAccount.testDisplay();
+        //System.out.print(SavingsAccount.printList());
+    }
+}
+
+
+class GeneralAccount
+{
+    private String accountName;
+    private String FullLegalName;
+    private double balance;
+    private int accountNumber;
+    private static double overdraftLimit;
+    private String creditcardnumber;
+    private String creditcardexp;
+    private String creditcardcvv;
+    private String middleinitial;
+    private String debitcardnumber;
+    private String debitcardexp;
+    private String debitcardcvv;
+    
+    //Constructors
+    public GeneralAccount(String name, String FullLegalName, double balance)
+    {
+        accountName = name;
+        this.FullLegalName = FullLegalName;
+        this.balance = balance;
+        overdraftLimit = balance * 1.1;
+        accountNumber = (int)(Math.random() * 999999999);
+    }
+    
+    //Deposit & Withdrawal
+    public void depositMoney(double deposit)
+    {
+        balance += deposit;
+        System.out.println("Your balance is now $" + balance);
+    }
+    
+    public void withdrawMoney(double withdrawal)
+    {
+        if(withdrawal <= balance)
+        {
+            balance -= withdrawal;
+            System.out.println("Your balance is now $" + balance);
+        }
+        
+        //Overdraft fee
+        else if(withdrawal < overdraftLimit)
+        {
+            balance -= withdrawal + 35.0;
+            System.out.println("Your balance is now $" + balance + "\n Due to overdrafting, you had to pay a fee of $35");
+        }
+        
+        //Over Overdraft Limit
+        else
+        {
+            System.out.println("Your balance is $" + balance + "\n Your balance is not high enough to make this withdrawal");
+        }
+    }
+    
+    public void displayAccountDetails() {
+        System.out.println("Account Holder: " + FullLegalName);
+        System.out.println("Account Name: " + accountName);
+        System.out.println("Account Number: " + accountNumber);
+        System.out.println("Current Balance: " + balance);
+    }
+    
+    //Get method
+    public double getBalance()
+    {
+        return balance;
+    }
+    
+    public int getAccountNumber()
+    {
+        return accountNumber;
+    }
+    
+    public String getAccountName()
+    {
+        return accountName;
+    }
+}
+
+class SavingsAccount extends GeneralAccount
+{
+    private int savingsAccountNumber;
+    private static double interestRate = 0.0325;
+    private static double minimumBalance = 300.0;
+    private static double minimumStartingBalance = 50.0;
+    private static int period= 1;
+    private static double monthlyFee = 5.0;
+    private static ArrayList<SavingsAccount> savingsList = new ArrayList<SavingsAccount>();
+    
+    //Constructors
+    
+    public SavingsAccount(String accountName, String FullLegalName, double balance)
+    {
+        super(accountName, FullLegalName, balance);
+        savingsAccountNumber = (int)(Math.random() * 999999999);
+    }
+    
+    public static void askQues()
+    {
+        Scanner test = new Scanner(System.in);
+        String ask = "";
+        
+        System.out.print("Would you like to make a new saving's account? [y/n]: ");
+        ask = test.nextLine();
+        
+        if (ask.equals("y")) {
+            createSavingsAccount();
+        }
+        else {
+            
+        }
+    }
+    
+     //Create Savings Account
+    public static void createSavingsAccount()
+    {
+        Scanner test = new Scanner(System.in);
+        
+        String aName;
+        String FullLegalName = "getFullName";
+        double initialDeposit;
+        
+        System.out.print("What would you like to call the account?: ");
+        aName = test.nextLine();
+        System.out.print("What is the initial deposit?: "); 
+        initialDeposit = Math.floor(100 * test.nextDouble()) / 100;
+        
+        if (initialDeposit >= SavingsAccount.getMinimumBal())
+            {
+                System.out.println(aName + "'s balance is now " + initialDeposit);
+            }
+        else
+            {
+                while (initialDeposit < SavingsAccount.getMinimumBal())
+                {
+                    System.out.println("Too low! The minimum amount to start an account is " + SavingsAccount.getMinimumBal());
+                    System.out.print("What is the initial deposit?: "); 
+                    initialDeposit = test.nextDouble();
+                }
+                
+            }
+            
+        askQues();
+        savingsList.add(new SavingsAccount(aName, FullLegalName, initialDeposit));
+    }
+    
+    //Month advance
+
+    /*
+    public static void monthAdvance()
+    {
+        if(balance >= minimumBalance)
+            monthlyFee = 0.0;
+        
+        balance = balance * (1.0 + Math.pow(interestRate / (double) period, period) - monthlyFee);
+    }
+    
+    public static String printList() {
+        String results = "";
+        for(SavingsAccount i : savingsList) 
+        {
+            results += i.getAccountName() + "(" + i.getAccountNumber() + "): " + i.getBalance() + "\n";
+        }
+        return results;
+    }
+    */
+    
+    public static void testDisplay()
+    {
+        for(SavingsAccount x : savingsList)
+        {
+            System.out.println("========================");
+            x.displayAccountDetails();
+        }
+        System.out.println("========================");
+    }
+    
+    public int getSavingsAccountNumber()
+    {
+        return savingsAccountNumber;
+    }
+    
+    public static double getMinimumBal()
+    {
+        return minimumStartingBalance;
+    }
+    
+    public static ArrayList<SavingsAccount> getList()
+    {
+        return savingsList;
+    }
+}
