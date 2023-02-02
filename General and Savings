@@ -106,13 +106,17 @@ class GeneralAccount
 
 class SavingsAccount extends GeneralAccount
 {
-    private int savingsAccountNumber;
+	private static ArrayList<SavingsAccount> savingsList = new ArrayList<SavingsAccount>();
+    
+	private int savingsAccountNumber;
+    private static double minimumStartingBalance = 50.0;
+    
+    /* unused interest variables
     private static double interestRate = 0.0325;
     private static double minimumBalance = 300.0;
-    private static double minimumStartingBalance = 50.0;
     private static int period= 1;
     private static double monthlyFee = 5.0;
-    private static ArrayList<SavingsAccount> savingsList = new ArrayList<SavingsAccount>();
+    */
     
     //Constructors
     
@@ -124,18 +128,20 @@ class SavingsAccount extends GeneralAccount
     
     public static void askQues()
     {
-        Scanner test = new Scanner(System.in);
+    	Scanner test = new Scanner(System.in);
         String ask = "";
-        
-        System.out.print("Would you like to make a new saving's account? [y/n]: ");
-        ask = test.nextLine();
-        
-        if (ask.equals("y")) {
-            createSavingsAccount();
-        }
+            
+        while(!(ask.equals("n")))
+    		{
+    	        System.out.print("Would you like to make a new saving's account? [y/n]: ");
+    	        ask = test.nextLine();
+    	        
+    	        if (ask.equals("y"))
+    	            SavingsAccount.createSavingsAccount();
+    		}
     }
     
-     //Create Savings Account
+//Create Savings Account
     public static void createSavingsAccount()
     {
         Scanner test = new Scanner(System.in);
@@ -151,7 +157,7 @@ class SavingsAccount extends GeneralAccount
         
         if (initialDeposit >= SavingsAccount.getMinimumBal())
             {
-                System.out.println(aName + "'s balance is now " + initialDeposit);
+                System.out.println(aName + "'s balance is now " + initialDeposit + "\n");
             }
         else
             {
@@ -163,20 +169,19 @@ class SavingsAccount extends GeneralAccount
                 }
                 
             }
-            
-        askQues();
         savingsList.add(new SavingsAccount(aName, FullLegalName, initialDeposit));
     }
     
-    public static void depositSavings(int accountIndex, double deposit)
+    //Deposit and Withdrawal in Account #X
+    public static void depositSavings(int x, double deposit)
     {
-    	SavingsAccount account = savingsList.get(accountIndex);
+    	SavingsAccount account = savingsList.get(x - 1);
     	account.deposit(deposit);
     }
     
-    public static void withdrawSavings(int accountIndex, double withdrawal)
+    public static void withdrawSavings(int x, double withdrawal)
     {
-    	SavingsAccount account = savingsList.get(accountIndex);
+    	SavingsAccount account = savingsList.get(x - 1);
     	account.withdraw(withdrawal);
     }
     
@@ -189,15 +194,6 @@ class SavingsAccount extends GeneralAccount
             monthlyFee = 0.0;
         
         balance = balance * (1.0 + Math.pow(interestRate / (double) period, period) - monthlyFee);
-    }
-    
-    public static String printList() {
-        String results = "";
-        for(SavingsAccount i : savingsList) 
-        {
-            results += i.getAccountName() + "(" + i.getAccountNumber() + "): " + i.getBalance() + "\n";
-        }
-        return results;
     }
     */
     
@@ -221,10 +217,5 @@ class SavingsAccount extends GeneralAccount
     public static double getMinimumBal()
     {
         return minimumStartingBalance;
-    }
-    
-    public static ArrayList<SavingsAccount> getList()
-    {
-        return savingsList;
     }
 }
