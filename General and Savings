@@ -25,7 +25,7 @@ class GeneralAccount
     private String debitcardexp;
     private String debitcardcvv;
     
-    //Constructors
+//Constructor
     public GeneralAccount(String name, String FullLegalName, double balance)
     {
         transactionHistory = new ArrayList<String>();
@@ -36,7 +36,7 @@ class GeneralAccount
         accountNumber = (int)(Math.random() * 999999999);
     }
     
-    //Deposit & Withdrawal
+//Deposit & Withdrawal
     public void deposit(double deposit)
     { 
         balance += Math.floor(100 * deposit) / 100;
@@ -51,7 +51,7 @@ class GeneralAccount
         {
             balance -= Math.floor(100 * withdrawal) / 100;;
             LocalDate date = LocalDate.now();
-            System.out.println(accountName + "'s balance is now $" + balance);
+            System.out.println(accountName + "'s balance is now $\n" + balance);
             transactionHistory.add(date + ": Withdrew $" + withdrawal);
         }
         
@@ -61,17 +61,17 @@ class GeneralAccount
         	double totalWithdrawal = Math.floor(100 * withdrawal) / 100 + 35.0;
             balance -= totalWithdrawal;
             LocalDate date = LocalDate.now();
-            System.out.println(accountName + "'s balance is now $" + balance + "\n Due to overdrafting, you had to pay a fee of $35");
+            System.out.println(accountName + "'s balance is now $" + balance + "\nDue to overdrafting, you had to pay a fee of $35\n");
             transactionHistory.add(date + ": Withdrew $" + totalWithdrawal);
         }
         
         //Over Overdraft Limit
         else
         {
-            System.out.println("Your balance is $" + balance + "\n Your balance is not high enough to make this withdrawal");
+            System.out.println("Your balance is $" + balance + "\n Your balance is not high enough to make this withdrawal\n");
         }
     }
-    
+//Account Details
     public void displayAccountDetails() {
         System.out.println("Account Holder: " + FullLegalName);
         System.out.println("Account Name: " + accountName);
@@ -86,7 +86,7 @@ class GeneralAccount
         
     }
     
-    //Get method
+//Get Methods
     public double getBalance()
     {
         return balance;
@@ -118,7 +118,7 @@ class SavingsAccount extends GeneralAccount
     private static double monthlyFee = 5.0;
     */
     
-    //Constructors
+//Constructors
     
     public SavingsAccount(String accountName, String FullLegalName, double balance)
     {
@@ -126,7 +126,8 @@ class SavingsAccount extends GeneralAccount
         savingsAccountNumber = (int)(Math.random() * 999999999);
     }
     
-    public static void askQues()
+//Prompts
+    public static void promptCreate()
     {
     	Scanner test = new Scanner(System.in);
         String ask = "";
@@ -139,6 +140,39 @@ class SavingsAccount extends GeneralAccount
     	        if (ask.equals("y"))
     	            SavingsAccount.createSavingsAccount();
     		}
+    }
+    
+    public static void promptTransaction()
+    {
+    	Scanner test = new Scanner(System.in);
+    	String ask;
+    	
+    	System.out.println("Would you like to make a Deposit or Withdrawal? [d/w]: ");
+    	ask = test.nextLine();
+    	if(ask.equals("d"))
+    	{
+    		int accountIndex;
+    		double deposit;
+    		System.out.println("What account would you like to deposit into? [#]");
+    		accountIndex = test.nextInt();
+    		
+    		System.out.println("How much would you like to deposit? [#]");
+    		deposit = test.nextDouble();
+    		
+    		SavingsAccount.depositSavings(accountIndex, deposit);
+    	}
+    	else if(ask.equals("w"))
+    	{
+    		int accountIndex;
+    		double withdrawal;
+    		System.out.println("What account would you like to withdraw from? [#]");
+    		accountIndex = test.nextInt();
+    		
+    		System.out.println("How much would you like to withdraw? [#]");
+    		withdrawal = test.nextDouble();
+    		
+    		SavingsAccount.withdrawSavings(accountIndex, withdrawal);
+    	}
     }
     
 //Create Savings Account
@@ -172,7 +206,7 @@ class SavingsAccount extends GeneralAccount
         savingsList.add(new SavingsAccount(aName, FullLegalName, initialDeposit));
     }
     
-    //Deposit and Withdrawal in Account #X
+//Deposit and Withdrawal in Account #X
     public static void depositSavings(int x, double deposit)
     {
     	SavingsAccount account = savingsList.get(x - 1);
@@ -184,18 +218,6 @@ class SavingsAccount extends GeneralAccount
     	SavingsAccount account = savingsList.get(x - 1);
     	account.withdraw(withdrawal);
     }
-    
-    //Month advance
-
-    /*
-    public static void monthAdvance()
-    {
-        if(balance >= minimumBalance)
-            monthlyFee = 0.0;
-        
-        balance = balance * (1.0 + Math.pow(interestRate / (double) period, period) - monthlyFee);
-    }
-    */
     
     public static void getUserSavings()
     {
@@ -218,4 +240,14 @@ class SavingsAccount extends GeneralAccount
     {
         return minimumStartingBalance;
     }
+    
+    /*
+    public static void monthAdvance()
+    {
+        if(balance >= minimumBalance)
+            monthlyFee = 0.0;
+        
+        balance = balance * (1.0 + Math.pow(interestRate / (double) period, period) - monthlyFee);
+    }
+    */
 }
