@@ -147,16 +147,16 @@ class SavingsAccount extends GeneralAccount
     	Scanner test = new Scanner(System.in);
     	String ask;
     	
-    	System.out.println("Would you like to make a Deposit or Withdrawal? [d/w]: ");
+    	System.out.print("Would you like to make a Deposit or Withdrawal? [d/w]: ");
     	ask = test.nextLine();
     	if(ask.equals("d"))
     	{
     		int accountIndex;
     		double deposit;
-    		System.out.println("What account would you like to deposit into? [#]");
+    		System.out.print("\nWhat account would you like to deposit into?: #");
     		accountIndex = test.nextInt();
     		
-    		System.out.println("How much would you like to deposit? [#]");
+    		System.out.print("\nHow much would you like to deposit?: $");
     		deposit = test.nextDouble();
     		
     		SavingsAccount.depositSavings(accountIndex, deposit);
@@ -165,10 +165,10 @@ class SavingsAccount extends GeneralAccount
     	{
     		int accountIndex;
     		double withdrawal;
-    		System.out.println("What account would you like to withdraw from? [#]");
+    		System.out.print("\nWhat account would you like to withdraw from?: #");
     		accountIndex = test.nextInt();
     		
-    		System.out.println("How much would you like to withdraw? [#]");
+    		System.out.print("\nHow much would you like to withdraw?: $");
     		withdrawal = test.nextDouble();
     		
     		SavingsAccount.withdrawSavings(accountIndex, withdrawal);
@@ -186,19 +186,19 @@ class SavingsAccount extends GeneralAccount
         
         System.out.print("What would you like to call the account?: ");
         aName = test.nextLine();
-        System.out.print("What is the initial deposit?: "); 
+        System.out.print("What is the initial deposit?: $"); 
         initialDeposit = Math.floor(test.nextDouble() * 100) / 100;
         
         if (initialDeposit >= SavingsAccount.getMinimumBal())
             {
-                System.out.println(aName + "'s balance is now " + initialDeposit + "\n");
+                System.out.println(aName + "'s balance is now $" + initialDeposit + "\n");
             }
         else
             {
                 while (initialDeposit < SavingsAccount.getMinimumBal())
                 {
-                    System.out.println("Too low! The minimum amount to start an account is " + SavingsAccount.getMinimumBal());
-                    System.out.print("What is the initial deposit?: "); 
+                    System.out.println("Too low! The minimum amount to start an account is $" + SavingsAccount.getMinimumBal());
+                    System.out.print("What is the initial deposit?: $"); 
                     initialDeposit = test.nextDouble();
                 }
                 
