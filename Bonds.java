@@ -1,15 +1,17 @@
 import java.util.Scanner;
 import java.lang.Math;
 import java.util.random.*;
+import java.io.*;
 
 public class Bonds{
     public static void main(String[] args){
-        user user1 = new user("admin", "user", 123456, "123098", "Harshit", "Patel", "Male", 99, "idontexist@gmail.com", 100000.00, "none", "none", "none", "Donald", "none", "none", "none", "none");
+        user user1 = new user("admin", "user", 123456, "123098", "Harshit", "Patel", "Male", 99, "idontexist@gmail.com", 100000.00, "none", "none", "none", "Donald", "none", "none", "none", "none", 0);
+        Bond bond1 = new Bond("", "", "", "", "", "", 0.0, "");
         System.out.println("Directing you to TreasuryDirect...");
-        usermenu(user1);
+        login(user1);
     }
 
-    public static void usermenu(user user1){
+    public static void login(user user1){
         Scanner input = new Scanner(System.in);
         int choice = 0;
         do{
@@ -19,49 +21,99 @@ public class Bonds{
         }
         while(choice == 1 || choice == 2);
         if(choice == 1){
-            createaccount(user1);
-        }
-        else{
-            login(user1);
-        }
-    }
-
-    public static void createaccount(user user1){
-        String tdnumber = user1.getTDnumber();
-        if(tdnumber.equals("none")){
-            System.out.println("Connecting with your bank account...");
-            System.out.println("Registering your account...");
-            System.out.println("Generating your account number...");
-            System.out.println("Your Treasury Direct Account has been registered!");
-            String accountnumber = "" + (int)(Math.random() * 9) + 0;
-            for(int i = 0; i <  10; i++){
-                accountnumber += (int)(Math.random() * 9) + 0;
+            String tdnumber = user1.getTDnumber();
+            if(tdnumber.equals("none")){
+                System.out.println("Connecting with your bank account...");
+                System.out.println("Registering your account...");
+                System.out.println("Generating your account number...");
+                System.out.println("Your Treasury Direct Account has been registered!");
+                String accountnumber = "" + (int)(Math.random() * 9) + 0;
+                for(int i = 0; i <  10; i++){
+                    accountnumber += (int)(Math.random() * 9) + 0;
+                }
+                System.out.println("Your Treasury Direct Account Number is: " + accountnumber);
             }
-            user1.setTDnumber(accountnumber);
-            System.out.println("Your Treasury Direct Account Number is: " + accountnumber);
-            System.out.println("Directing you back to TreasuryDirect Login...");
-            login(user1);
+            else{
+                System.out.println("You already have a Treasury Direct Account");
+                System.out.println("Please login into your account");
+                login(user1);
+            }
+            
+        }
+        if(choice == 2){
+            System.out.println("");
+        }
+        System.out.println("Enter the four digits of you Social Security Number: ");
+        String last4digits = input.next();
+        String ssnumber = user1.getSSNumber();
+        int index = ssnumber.length();
+        ssnumber = ssnumber.substring(index - 4, index);
+        if(last4digits.equals(ssnumber)){
+            System.out.println("works");
         }
         else{
-            System.out.println("You already have a Treasury Direct Account");
-            System.out.println("Please login into your account");
-            login(user1);
+            int i = 0;
+            Boolean matches = false;
+            do{
+                System.out.println("The last 4 digits do not match with you Social Security Number. Please Try Again. You have " + (3 - i) + " remaining." );
+                i++;
+                System.out.println("Enter the four digits of you Social Security Number: ");
+                ssnumber = input.next();
+                if(last4digits.equals(ssnumber)){
+                    matches = true;
+                }
+            }
+            while(i < 3 || matches == true);
+            if(matches == true){
+                TDMenu(user1);
+            }
         }
     }
 
-    public static void securitycheck(user user1){
+    public static void TDMenu(user user1){
+        Scanner input = new Scanner(System.in);
+        int choice = 0;
+        do{
+            System.out.println("1. Manage Bonds");
+            System.out.println("2. Buy Bonds");
+            choice = input.nextInt();
+        }
+        while(choice == 1 || choice == 2);
+        if(choice == 1){
+            
+            managebonds(user1);
+        }
+        else{
+            buybonds(user1);
+        }
+    }
+
+    public static void managebonds(user user1){
 
     }
 
-    public static void login(user user1){
+    public static void buybonds(user user1){
+        user1.setBondnumber(user1.getBondnumber()+1);
         Scanner input = new Scanner(System.in);
-        String accountnumber = input.next();
-        boolean accnumbercheck = false;
+        int choice = 0;
         do{
-            System.out.println("Please Enter Your Account Number: ");
+            System.out.print("Type of Owner:");
+            System.out.println("1. Sole Owner");
+            System.out.print("2. Primary Owner:");
+            System.out.print("3. Beneficiary");
+            choice = input.nextInt();
+        }
+        while(choice == 1 || choice == 2 || choice == 3);
+        if(choice == 1){
+            
+        }
+        else if(choice == 2){
+            
+        }
+        else{
+            
+        }
         
-        }   
-        while(accnumbercheck = false);
     }
 }
 
@@ -84,6 +136,7 @@ class user{
     private String debitcardexp;
     private String debitcardcvv;
     private String tdnumber;
+    private int numberofbonds;
 
     public user(){
         username = "";
@@ -104,9 +157,10 @@ class user{
         debitcardexp = "";
         debitcardcvv = "";
         tdnumber = "";
+        numberofbonds = 0;
     }
 
-    public user(String a, String b, int c, String d, String e, String f, String g, int h, String i, double j, String k, String l, String m, String n, String o, String p, String q, String r){
+    public user(String a, String b, int c, String d, String e, String f, String g, int h, String i, double j, String k, String l, String m, String n, String o, String p, String q, String r, int s){
         username = a;
         password = b;
         accountnumber = c;
@@ -125,6 +179,7 @@ class user{
         debitcardexp = p;
         debitcardcvv = q;
         tdnumber = r;
+        numberofbonds = s;
     }
 
     public String getCreditCardNumber(){
@@ -205,5 +260,46 @@ class user{
     
     public String getSSNumber(){
         return socialsecurity;
+    }
+
+    public int getBondnumber(){
+        return numberofbonds;
+    }
+
+    public void setBondnumber(int s){
+        numberofbonds = s;
+    }
+}
+
+class Bond{
+    private String type;
+    private String firstname;
+    private String middleinitial;
+    private String lastname;
+    private String suffix;
+    private String TIN;
+    private double amount;
+    private String sourceofunds;
+
+    public Bond(){
+        type = "";
+        firstname = "";
+        middleinitial = "";
+        lastname = "";
+        suffix = "";
+        TIN = "";
+        amount = 0.0;
+        sourceofunds = "";
+    }
+
+    public Bond(String a, String b, String c, String d, String e, String f, double g, String h){
+        type = a;
+        firstname = b;
+        middleinitial = c;
+        lastname = d;
+        suffix = e;
+        TIN = f;
+        amount = g;
+        sourceoffunds = h;
     }
 }
