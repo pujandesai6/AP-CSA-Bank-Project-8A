@@ -1,111 +1,130 @@
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ATM {
+public class ATM extends GeneralAccount {
+    public ATM(String name, double balance) {
+        super(name, balance);
+        // TODO Auto-generated constructor stub
+    }
+
+    private static ArrayList<SavingsAccount> savingsList = new ArrayList<SavingsAccount>();
     static Scanner input = new Scanner(System.in);
-    static private String cardNumber = "1";
-    // actual cardNumber = 1234567891012131
-    static private int Pin = 1234;
-    public double addCustom = 0;
-    public static double checkingBalance = 0;
+    static private String checkingCardNumber;
+    static private String savingsCardNumber;
 
-    // withdrawal
-
-    static double takeCustom = 0;
+    static private double checkingBalance;
+    // actual cardNumber = 4 2 2 8 4 5 3 1 6 8 3 4 7 0 5 1
 
     public static void main(String[] args) {
-        int login = 0;
+
+        int beg = 0;
+        int Pin = 0;
+        double checkingSavingAmount = 0;
 
         // use the do-while loop
-        System.out.println();
-        System.out.print("Enter Card Number: ");
-        String userCardNumber = input.next();
-        if (userCardNumber.equals(cardNumber)) {
+        while (beg == 0) {
+
+            System.out.println("Welcome to an ATM of The Bank of Cangerizzi");
+            System.out.println("Please set up your Pin.");
+            Pin = input.nextInt();
+            String newPin = String.valueOf(Pin);
+            if (newPin.length() > 5 || newPin.length() < 4) {
+                System.out.println("Your pin number must be 4 integers.");
+
+            } else if (newPin.length() == 4) {
+                beg++;
+            }
+
+        }
+        while (beg == 1) {
+
+            System.out.println("Welcome to the ATM");
             System.out.println();
             System.out.print("Enter the Pin Number: ");
             int userPin = input.nextInt();
+            int checkingOrSaving = 0;
             if (userPin == Pin) {
+
                 System.out.println("Welcome to the account.");
                 System.out.println("What would you like to access?\n1.Checking Account \n2.Savings Account");
-                int checkingOrSavings = input.nextInt();
+                checkingOrSaving = input.nextInt();
 
-                do {
-                    if (checkingOrSavings == 1) {
-                        login++;
-                        Checking checking1 = new Checking(addCustom, takeCustom, addCustom, addCustom, addCustom,
-                                addCustom, addCustom, addCustom, addCustom, addCustom);
-                        System.out.println("Welcome to the Checking Account.");
-                        System.out.println(
-                                "Your current balance in the Checking Account is $" + checkingBalance); // add
-                        // checking
-                        // balance
-                        System.out
-                                .println("Would you like to make a Deposit or Withdraw money?\n1.Deposit\n2.Withdraw");
-                        double depositOrWithdraw = input.nextDouble();
+                if (checkingOrSaving == 1) {
+                    // checking account
 
-                        if (depositOrWithdraw == 1) {
-                            System.out.println(
-                                    "How much would you like to Deposit?");
-                            addCustom = input.nextDouble();
-                            Checking.Checking(addCustom);
-                            System.out.println(
-                                    "You deposited $" + addCustom + "\nYour balance is now $"
-                                            + checking1.getaddCustom());
+                    System.out.println("Welcome to your Checking Account!");
+                    System.out.println("What is the card number?");
+                    String userCheckingCardNumber = input.next();
+                    if (checkingCardNumber == userCheckingCardNumber) {
+                        System.out.println("Account Number: " + (int) (Math.random() * 999999999));
+                        System.out.println("Current Balance: " + checkingBalance);
 
+                        while (true) {
+                            System.out.println("Please select an option:");
+                            System.out.println("1. Deposit");
+                            System.out.println("2. Withdraw");
+                            System.out.println("3. Exit");
+
+                            int choice = input.nextInt();
+
+                            if (choice == 1) {
+                                System.out.println("Enter the amount you wish to deposit:");
+                                double depositAmount = input.nextDouble();
+                                checkingBalance += (depositAmount);
+                            } else if (choice == 2) {
+                                System.out.println("Enter the amount you wish to withdraw:");
+                                double withdrawAmount = input.nextDouble();
+                                checkingBalance -= (withdrawAmount);
+                            } else if (choice == 3) {
+                                break;
+                            } else {
+                                System.out.println("Invalid Choice!");
+                            }
                         }
-                        System.out.println("Would you like to make any changes?\n1.Yes \n2.No");
-                        int changeToWithdrawal = input.nextInt();
-                        if (changeToWithdrawal == 1) {
-                            addCustom = 2;
-                        }
 
-                    } else if (addCustom == 2) {
-                        System.out.println(
-                                "How much would you like to withdraw?\n$10, $20, $50, $100, or a custom amount?\n(please write \"11\" if you want a custom withdrawal.)");
-                        // double withdrawCheckingAccount = input.nextDouble();
-
-                        // if (withdrawCheckingAccount == 10) {
-                        // System.out.println("You have taken $" + checking1.balancetake10()
-                        // + "\nYour balance is now $" + checkingBalance);
-                        // } else if (withdrawCheckingAccount == 20) {
-                        // System.out.println("You have take $" + checking1.balancetake20()
-                        // + "\nYour balance is now $" + checkingBalance);
-                        // } else if (withdrawCheckingAccount == 50) {
-                        // System.out.println("You have taken $" + checking1.balancetake50()
-                        // + "\nYour balance is now $" + checkingBalance);
-                        // } else if (withdrawCheckingAccount == 100) {
-                        // System.out.println("You have taken $" + checking1.balancetake100()
-                        // + "\nYour balance is now $" + checkingBalance);
-                        // } else if (withdrawCheckingAccount == 11) {
-                        // System.out.println("Please type in how much money you wish to withdraw...");
-                        // addCustom = input.nextDouble();
-                        // System.out.println(
-                        // "You have taken $" + takeCustom + "\nYour balance is now $" +
-                        // checkingBalance);
-                        // }
-                        // }
-
-                        // }
-
-                        // else if (checkingOrSavings == 2) {
-                        // System.out.println("Welcome to the Savings Account.");
-                        // System.out.println("Your current balance in the Savings Account is "); // add
-                        // savings balance
-
+                        System.out.println("Thank you for using our services!");
                     }
+                } else if (userPin != Pin) {
+                    System.out.println("Incorrect Pin");
+
+                } else if (checkingOrSaving == 2) {
 
                 }
 
-                while (login == 1);
+            } else {
+
+                System.out.println("Incorrect Card Number");
             }
 
-            else {
-                System.out.println("Incorrect Pin");
+            System.out.println("Would you like to make a wire transfer between checkingBalances?\n1.Yes\n2.No");
+            int wireYesNo = input.nextInt();
+            if (wireYesNo == 1) {
+                System.out.println("To which checkingBalance?\n1.From Checking To Savings\n2.From Savings To Checking");
+                int wireChoice = input.nextInt();
+                double balance = 0;
+                if (wireChoice == 1) {
+                    System.out.println(
+                            "How much would to like to transfer from the Checking checkingBalance to the Savings checkingBalance?");
+                    checkingSavingAmount = input.nextDouble();
+                    // checking
+                    checkingBalance.withdrawSavings(checkingSavingAmount);
+
+                } else if (wireChoice == 2) {
+                    System.out.println(
+                            "How much would to like to transfer from the Savings checkingBalance to the Checking checkingBalance?");
+                    checkingSavingAmount = input.nextDouble();
+                    // checking
+                    checkingBalance += checkingSavingAmount;
+                    // savings
+                    balance -= checkingSavingAmount;
+                    // nbalance.depositMoney(checkingSavingAmount);
+                    System.out.println("Your Checking checkingBalance now has $" + checkingBalance);
+                    System.out.println("Your Savings checkingBalance now has $" + balance);
+                }
+
             }
 
-        } else
-
-        {
-            System.out.println("Incorrect Card Number");
         }
 
     }
