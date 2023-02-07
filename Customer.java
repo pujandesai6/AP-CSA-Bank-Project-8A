@@ -2,20 +2,15 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 class AccessPoint {
+    //COPY THIS CODE (THE CONTENTS OF THE ACCESSPOINT CLASS) DIRECTLY INTO MAIN METHOD
+
     static Scanner UserInput = new Scanner(System.in);
     static boolean welcomed = false;
     static int failThreshold = 20;
     static int timesFailed = 0;
     
-    
-    public static void main(String[] args) {
-        //COMMENT OUT THE LINE BELOW WHEN NOT TESTING
-        //Customer.EnableTestingMode();
-        LoginLoop();
-    }
-    
     public static void LoginLoop() {
-        Customer localCustomer;
+        Customer localCustomer = Customer.placeholderCustomer;
         
         //Will be greeted like this the first time the user attempts to login
         if (welcomed == false) {
@@ -28,8 +23,8 @@ class AccessPoint {
             System.out.println("Input 1 to log in to an existing account or 2 to create a new one.");
         } else {
             System.out.println("Too many attempts made, deactivating your ability to login");
-            System.out.println("Have you forgotten your password? Please send the email associated with your bank account, and we will send you a password reset request.");
-            //TODO: MAKE THIS CODE FUNCTIONAL
+            System.out.println("Have you forgotten your password? Please send the email address associated with your bank account, and we will send you a password reset request.");
+            //TODO: MAKE IT CHECK ALL CUSTOMER'S EMAILS AND FIND THE RIGHT ONE
             return;
         }
         
@@ -52,8 +47,10 @@ class AccessPoint {
             System.out.println("Invalid response.");
             LoginLoop();
         }
-        
-        
+
+        while (true) {
+            localCustomer.GoToHomePage();
+        }
     } 
 }
 
@@ -62,7 +59,31 @@ class Customer {
     private static Scanner UserInput = new Scanner(System.in);
     private static ArrayList<String> securityQuestions;
     
-    private static Customer placeholderCustomer = new Customer();
+    public static Customer placeholderCustomer = new Customer();
+
+    //NOTE: Alert if user is depositing from a bank they don't usually go to
+    //PERSONAL INFO
+    private String FullLegalName;
+    private String firstName;
+    private String dateOfBirth;
+    private int age;
+    private String stateOfResidence;
+    private String zipCode;
+    private String lastFourDigitsOfSS;
+
+    //CONTACT INFO
+    private String phoneNumber;
+    private String email;
+
+    //BANK INFO
+    private ArrayList<GeneralAccount> accounts;
+    private int creditScore;
+
+    //ACCOUNT INFO
+    private String username;
+    private String password;
+    private String pin;
+    //private SafetyDepositBox SafetyBox;
     
     //Creates a test customer at index 0. Only for testing purposes.
     //COMMENT THIS OUT WHEN NOT TESTING
@@ -71,8 +92,59 @@ class Customer {
     //     Customers.add(0, new Customer("TestUsername", "TESTING123"));
     //     System.out.println("Test Customer successfully created. Your username is TestUsername, and your password is TESTING123.");
     // }
+
+    //METHODS
+    private Customer() {
+        this.username = "INVALID";
+     }
+     
+     private Customer(String FLN, String fN, String doB, String sOR, String zC, String lFDoSS, String pN, String ema, String user, String pass) {
+        this.FullLegalName = FLN;
+        this.firstName = fN;
+        this.dateOfBirth = doB;
+        this.stateOfResidence = sOR;
+        this.zipCode = zC;
+        this.lastFourDigitsOfSS = lFDoSS;
+        this.phoneNumber = pN;
+        this.email = ema;
+        this.username = user;
+        this.password = pass;
+        this.creditScore = (int) (Math.random() * 850) + 1;
+        //this.pin = pin;
+     }
+
+    public void GoToHomePage() {
+        System.out.printf("Welcome to the Bank of Cangerizzi, %s\n!", firstName);
+        System.out.println("What would you like to do?");
+
+        System.out.println("Press 1 to see user details");
+        System.out.println("Press 2 to edit and create new bank accounts");
+
+        if (UserInput.nextLine().equals("1")) {
+            DisplayUserDetails();
+        } else if (UserInput.nextLine().equals("2")) {
+            DisplayBankAccounts();
+        }
+    }
     
-    
+    private void DisplayUserDetails() {
+        System.out.printf("Name: %s", FullLegalName);
+        System.out.printf("Date of Birth: %s", dateOfBirth);
+        System.out.printf("State: %s", stateOfResidence);
+        System.out.printf("Phone Number: %s", phoneNumber);
+        System.out.printf("Email: %s", email);
+
+        System.out.println("Returning to home page.");
+    }
+
+    private void DisplayBankAccounts() {
+        int inc = 0;
+        for (GeneralAccount acc : accounts) {
+            inc++;
+            System.out.printf("%d: Name: %s | Balance: %.2f\n", inc, acc.getAccountName(), acc.getBalance());
+        }
+    }
+
     public static Customer RegisterAccount() {
         //Registration questions
         System.out.println("Insert XXXXX at any point to retype an answer for a question, as backspace doesn't work.");
@@ -416,50 +488,6 @@ class Customer {
         
         return loginCustomer;
     }
-   
-    //NOTE: Alert if user is depositing from a bank they don't usually go to
-    //PERSONAL INFO
-    private String FullLegalName;
-    private String firstName;
-    private String dateOfBirth;
-    private int age;
-    private String stateOfResidence;
-    private String zipCode;
-    private String lastFourDigitsOfSS;
-
-    //CONTACT INFO
-    private String phoneNumber;
-    private String email;
-
-    //BANK INFO
-    private ArrayList<BankAccount> accounts;
-    private int creditScore;
-    private String dateOfRegistration;
-
-    //ACCOUNT INFO
-    private String username;
-    private String password;
-    private String pin;
-    //private SafetyDepositBox SafetyBox;
-
-    //METHODS
-    private Customer() {
-       this.username = "INVALID";
-    }
-    
-    private Customer(String FLN, String fN, String doB, String sOR, String zC, String lFDoSS, String pN, String ema, String user, String pass) {
-        this.FullLegalName = FLN;
-        this.firstName = fN;
-        this.dateOfBirth = doB;
-        this.stateOfResidence = sOR;
-        this.zipCode = zC;
-        this.lastFourDigitsOfSS = lFDoSS;
-        this.phoneNumber = pN;
-        this.email = ema;
-        this.username = user;
-        this.password = pass;
-        this.pin = pin;
-    }
     
     public String GetUsername() {
         return this.username;
@@ -476,10 +504,14 @@ class Customer {
     public String GetFullName() {
         return this.FullLegalName;
     }
+
+    public int GetCreditScore() {
+        return this.creditScore;
+    }
 }
 
 //DONT DELETE THIS
 //ITS A PLACEHOLDER TO MAKE THE CODE RUn
-class BankAccount {
+class GeneralAccount {
     
 }
