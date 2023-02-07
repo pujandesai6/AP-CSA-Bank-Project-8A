@@ -3,7 +3,6 @@ import java.util.ArrayList;
 
 class AccessPoint {
     //COPY THIS CODE (THE CONTENTS OF THE ACCESSPOINT CLASS) DIRECTLY INTO MAIN METHOD
-
     static Scanner UserInput = new Scanner(System.in);
     static boolean welcomed = false;
     static int failThreshold = 20;
