@@ -241,6 +241,12 @@ class SavingsAccount extends GeneralAccount
         return minimumStartingBalance;
     }
     
+    public static double getSavingsBal(int x)
+    {
+    	SavingsAccount account = savingsList.get(x - 1);
+    	return account.getBalance();
+    }
+    
     /*
     public static void monthAdvance()
     {
