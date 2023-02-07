@@ -3,6 +3,8 @@ import java.util.ArrayList;
 
 public class UserMenu 
 {
+    Scanner UserInput = new Scanner(System.in);
+    
     public static void main(String args[]) 
     {
     	System.out.println("Hello! Welcome to Vito Cangerizzi Bank!");
@@ -39,16 +41,9 @@ public class UserMenu
             System.out.println();
         }
         
-        AccessPoint.LoginLoop();
-    }
-
-}
-
-class AccessPoint {
-     static Scanner UserInput = new Scanner(System.in);
-     static boolean welcomed = false;
-     static int failThreshold = 20;
-     static int timesFailed = 0;
+    static boolean welcomed = false;
+    static int failThreshold = 20;
+    static int timesFailed = 0;
     
     public static void LoginLoop() {
         Customer localCustomer = Customer.placeholderCustomer;
@@ -64,8 +59,8 @@ class AccessPoint {
             System.out.println("Input 1 to log in to an existing account or 2 to create a new one.");
         } else {
             System.out.println("Too many attempts made, deactivating your ability to login");
-            System.out.println("Have you forgotten your password? Please send the email associated with your bank account, and we will send you a password reset request.");
-            //TODO: MAKE THIS CODE FUNCTIONAL
+            System.out.println("Have you forgotten your password? Please send the email address associated with your bank account, and we will send you a password reset request.");
+            //TODO: MAKE IT CHECK ALL CUSTOMER'S EMAILS AND FIND THE RIGHT ONE
             return;
         }
         
@@ -88,9 +83,13 @@ class AccessPoint {
             System.out.println("Invalid response.");
             LoginLoop();
         }
-        
-        
+
+        while (true) {
+            localCustomer.GoToHomePage();
+        }
     } 
+    }
+
 }
 
 class Customer {
