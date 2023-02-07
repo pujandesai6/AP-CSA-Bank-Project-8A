@@ -3,7 +3,10 @@ import java.util.ArrayList;
 
 public class UserMenu 
 {
-    Scanner UserInput = new Scanner(System.in);
+    static Scanner UserInput = new Scanner(System.in);
+    static boolean welcomed = false;
+    static int failThreshold = 20;
+    static int timesFailed = 0;
     
     public static void main(String args[]) 
     {
@@ -39,13 +42,11 @@ public class UserMenu
                 }
             }
             System.out.println();
+            LoginLoop();
         }
-        
-    static boolean welcomed = false;
-    static int failThreshold = 20;
-    static int timesFailed = 0;
-    
-    public static void LoginLoop() {
+     }
+     
+     public static void LoginLoop() {
         Customer localCustomer = Customer.placeholderCustomer;
         
         //Will be greeted like this the first time the user attempts to login
@@ -88,8 +89,6 @@ public class UserMenu
             localCustomer.GoToHomePage();
         }
     } 
-    }
-
 }
 
 class Customer {
