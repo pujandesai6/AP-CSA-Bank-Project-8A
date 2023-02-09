@@ -76,19 +76,32 @@ public class debug
         double[] conversions = {0, 0.92, 0.81, 129.27, 0.92, 0.75, 1.41, 1.55, 1.31, 7.81, 6.74, 81.88, 1500.60, 4.27, 54.47, 32.96 };
         if (currencyChoice > 0 && currencyChoice < 15) {
         	convertedAmount = conversions[currencyChoice] * amountInDollars;
-        	System.out.println("Your converted amount is: " + (double) Math.round(convertedAmount * 1000) / 1000);
+        	System.out.println("Your converted amount is: " + (double) Math.round(convertedAmount * 1000) / 1000 + currencyChoice);
+        	System.out.println();
         	
-        	//Confirm conversion
-        	System.out.println("Would you like to confirm your exchange? \nYou will be charged an extra 1% of the amount you wish to exchange \nEnter 1 for yes and 2 for no");
+        	//Confirm the conversion
+        	System.out.println("Would you like to confirm your exchange? You will be charged an extra 1% of the amount you wish to exchange \nEnter 1 for yes and 2 for no");
         	int response = scanner.nextInt();
         	
         	if (response == 1)
         	{
         		double totalAmount = amountInDollars + (amountInDollars * (0.01));
         		System.out.println("The total amount you will be charges is: " + totalAmount);
-        		//code to remove totalAmount from bank account and where would converted amount go
+        		//code to remove totalAmount from bank account and where would converted amount go*******
         	}
         	else if (response == 2)
+        	{
+        		System.out.println("Enter 1 to restart or 2 to exit");
+        		int answer = scanner.nextInt();
+        		
+        		if (answer == 1) {
+        			ConvertCurrency();
+        		}
+        		else if (answer == 2) {
+        			//code to terminate program*****
+        		}
+        	}
+        	else
         	{
         		ConvertCurrency();
         	}
