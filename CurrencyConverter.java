@@ -98,7 +98,8 @@ public class debug
         			ConvertCurrency();
         		}
         		else if (answer == 2) {
-        			//code to terminate program*****
+        			System.out.println("Thank you.....");
+        			System.exit(0);
         		}
         	}
         	else
