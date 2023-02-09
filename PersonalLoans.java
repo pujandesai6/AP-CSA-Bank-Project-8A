@@ -1,5 +1,5 @@
 import java.util.*;
-import java.lang.Math;
+import java.time.LocalDate;
 
 class Loan
 {
@@ -18,7 +18,7 @@ class Loan
         this.fullLegalName = "GetFullName"; //Get from Customer
         this.loanName = loanName;
         this.principle = principle;
-	this.totalPay = totalPay;
+    	this.totalPay = totalPay;
         this.monthlyPay = monthlyPay;
         this.loanLength = loanLength;
         this.creditScore = 700; //Get from Customer
@@ -39,6 +39,22 @@ class Loan
     	            Loan.createLoan();
     		}
     }
+    
+    public static void promptPay()
+    {
+    	Scanner adhi = new Scanner(System.in);
+        String ask = "";
+            
+        while(!(ask.equals("n")))
+    		{
+    	        System.out.print("Would you like to pay a loan's monthly payment? [y/n]: ");
+    	        ask = adhi.nextLine();
+    	        
+    	        if (ask.equals("y"))
+    	            Loan.payLoan();
+    		}
+    }
+    
     public static void createLoan()
     {
         Scanner adhi = new Scanner(System.in);
@@ -56,9 +72,9 @@ class Loan
         System.out.print("How many years do you want your loan term to be?: ");
         loanTerm = adhi.nextInt();
    
-        double interest = 1.0 + ((1000.0 - (double)creditScore) * 0.0001) * (1.0 + (double)loanTerm * 0.1); //Not Working
-	double tPay = Math.pow(interest, (double) loanTerm) * loanPrinciple
-        double monthlyPayments = tPay / ((double)loanTerm * 12.0); //**********************************
+        double interest = 1.0 + ((1000.0 - (double)creditScore) * 0.0001) * (1.0 + (double)loanTerm * 0.1);
+	    double tPay = Math.pow(interest, (double) loanTerm) * loanPrinciple;
+        double monthlyPayments = tPay / ((double)loanTerm * 12.0);
         loanList.add(new Loan(name,loanPrinciple,tPay,monthlyPayments,loanTerm,interest));
         System.out.println("New loan created!");
     }
@@ -73,12 +89,12 @@ class Loan
         }
         	System.out.println("================================");
     }
-    public void totalMinusMonthly()    //monthly payment
+    public void totalMinusMonthly()    //resets monthly payment
     {
 	   totalPay -= monthlyPay;
 	   monthlyPay = 0;
     }
-    public static void loanTotalPay(int choice)
+    public static void loanTotalPay(int choice)     //amount left in a loan
     {
 	    Loan loanChoice = loanList.get(choice - 1);
 	    loanChoice.totalMinusMonthly();
@@ -88,7 +104,7 @@ class Loan
     {
 	    return monthlyPay;
     }
-    public static double getChoiceMonthlyPay(int x)
+    public static double getChoiceMonthlyPay(int x)    //gets which loan to pay
     {
 	    Loan choice = loanList.get(x - 1);
 	    return choice.getMonthlyPay();
@@ -104,16 +120,19 @@ class Loan
     	System.out.println("Choose an Account # from the list to pay from: ");
     	SavingsAccount.getUserSavings();
     	acctChoice = ashleySmells.nextInt();
-	if(SavingsAccount.getSavingsBal(acctChoice) >= Loan.getChoiceMonthlyPay(loanChoice)
+	if(SavingsAccount.getSavingsBal(acctChoice) >= Loan.getChoiceMonthlyPay(loanChoice)) {
 		Loan.loanTotalPay(loanChoice);
-		SavingsAccount.withdraw(acctChoice, Loan.getChoiceMonthlyPay());
-	else
+		SavingsAccount.withdrawSavings(acctChoice, Loan.getChoiceMonthlyPay(loanChoice));
+	}
+	else {
+	   System.out.print("not enough");
+	}
 	   
 	
     }
     public double getBalance()
     {
-	    return totalPay();
+	    return totalPay;
     }
     public void displayLoanDetails() 
     {
