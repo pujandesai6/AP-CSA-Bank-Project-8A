@@ -58,7 +58,7 @@ class Loan
    
         double interest = 1.0 + ((1000.0 - (double)creditScore) * 0.0001) * (1.0 + (double)loanTerm * 0.1); //Not Working
 	double tPay = Math.pow(interest, (double) loanTerm) * loanPrinciple
-        double monthlyPayments = tPay / (loanTerm * 12);
+        double monthlyPayments = tPay / (loanTerm * 12); //**********************************
         loanList.add(new Loan(name,loanPrinciple,tPay,monthlyPayments,loanTerm,interest));
         System.out.println("New loan created!");
     }
