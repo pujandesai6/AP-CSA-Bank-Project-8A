@@ -1,10 +1,19 @@
-/*
-Ashley, Sebastian, Ravi
-General Account and Savings Account
-*/
+import java.util.*;
+import java.lang.Math;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.time.LocalDate;
+
+public class betaTest {
+    public static void main (String args []) {
+        SavingsAccount.promptCreate();
+        SavingsAccount.promptTransaction();
+        Loan.promptCreate();
+        Loan.promptPay();
+        Loan.getUserLoans();
+        SavingsAccount.getUserSavings();
+    }
+}
 
 class GeneralAccount
 {
@@ -153,7 +162,8 @@ class SavingsAccount extends GeneralAccount
     	{
     		int accountIndex;
     		double deposit;
-    		System.out.print("\nWhat account would you like to deposit into?: #");
+    		SavingsAccount.getUserSavings();
+    		System.out.print("\nPick an account # from the list to deposit into?: #");
     		accountIndex = test.nextInt();
     		
     		System.out.print("\nHow much would you like to deposit?: $");
@@ -165,7 +175,8 @@ class SavingsAccount extends GeneralAccount
     	{
     		int accountIndex;
     		double withdrawal;
-    		System.out.print("\nWhat account would you like to withdraw from?: #");
+    		SavingsAccount.getUserSavings();
+    		System.out.print("\nPick an account # from the list to withdraw from?: #");
     		accountIndex = test.nextInt();
     		
     		System.out.print("\nHow much would you like to withdraw?: $");
