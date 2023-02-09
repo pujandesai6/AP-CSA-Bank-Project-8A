@@ -4,17 +4,6 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.time.LocalDate;
 
-public class betaTest {
-    public static void main (String args []) {
-        SavingsAccount.promptCreate();
-        SavingsAccount.promptTransaction();
-        Loan.promptCreate();
-        Loan.promptPay();
-        Loan.getUserLoans();
-        SavingsAccount.getUserSavings();
-    }
-}
-
 class GeneralAccount
 {
     private ArrayList<String> transactionHistory;
