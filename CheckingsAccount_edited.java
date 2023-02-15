@@ -1,7 +1,7 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 
-public class Example{
+public class checkings_account{
     
 	public static void main(String[] args) {
         CheckingAccount a = new CheckingAccount();
@@ -14,36 +14,42 @@ class CheckingAccount extends Savings
     private double CA_TotalBalance = 200;
     private double CA_OverDraftLimit;
     private static double MinimumBalance = 100;
+
+    Scanner input = new Scanner(System.in);
+    Scanner options = new Scanner(System.in);
+
+    ArrayList<String> accountinfo = new ArrayList<String>();
         
     public void deposit(double amount)
     {
         CA_TotalBalance += amount;
-        CA_OverDraftLimit = CA_TotalBalance * 1.5;
+        CA_OverDraftLimit = CA_TotalBalance;
+        if (MinimumBalance > CA_TotalBalance)
+        {
+            sa_balance = sa_balance - 25;
+            System.out.println("Your balance is less than minimum balance requirement.\nTherefore $25 dollars has been deducted from your savings account.");
+
+        }
     }
     
-    public void withdraw(double amount){
+    public void withdraw(double amount)
+    {
         if (amount <= CA_TotalBalance)
         {
             CA_TotalBalance -= amount;
-            if(CA_TotalBalance < 100)
-            {
-                sa_balance = sa_balance - 25;
-                System.out.println("Your balance is less than minimum balance requirement.\nTherefore $25 dollars has been deducted from your savings account.");
-
-            }
         }
-        else if (amount <= CA_OverDraftLimit)
+        else if (amount >= CA_TotalBalance && (amount - CA_TotalBalance) < 0)
         {
-            CA_TotalBalance -= amount + 35;
-            System.out.println("Your Total Balance is now $" + CA_TotalBalance + "\nYou have to pay $25 fee for overdrafting");
-            CA_OverDraftLimit = 0;
+            double new_amount = amount - CA_TotalBalance;
+            sa_balance -= new_amount + 35;
+            System.out.println("$"+ new_amount + "Has been duducted from your Savings Account.\nYour Checkings Account has balance of $" + CA_TotalBalance);
+
         }
         else
         {
             System.out.println("Your balance is $"+ CA_TotalBalance +"\nYour balance is not high enough to make this withdraw");
         }
     }
-    
     
     public String getAccountNumber()
     {
@@ -62,7 +68,6 @@ class CheckingAccount extends Savings
 
     public void menu()
     {
-        Scanner input = new Scanner(System.in);
         System.out.println("\nAccount Number:  " + getAccountNumber() + "\n");
 
         int i = 0;
@@ -97,7 +102,7 @@ class CheckingAccount extends Savings
             
             else if (option == 3)
             {
-                System.out.print("Successfully logged out");
+                System.out.print("Successfully logged out\n");
                 i++;
             }
             
@@ -108,4 +113,5 @@ class CheckingAccount extends Savings
         }
 
     }
+
 }
