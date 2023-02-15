@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class ATM {
 
-    // private static ArrayList<SavingsAccount> savingsList = new
+    // private static ArrayList<SavingsAccount> savingsList = new 
     // ArrayList<SavingsAccount>();
     static Scanner input = new Scanner(System.in);
     // placeholder
