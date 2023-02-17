@@ -85,9 +85,23 @@ public class debug
         	
         	if (response == 1)
         	{
-        		double totalAmount = amountInDollars + (amountInDollars * (0.01));
+        		
+        		double totalAmount = (amountInDollars * 1.01 );
         		System.out.println("The total amount you will be charges is: " + totalAmount);
-        		//code to remove totalAmount from bank account and where would converted amount go*******
+        		
+        		System.out.println("From which account would you like to take funds from? \n Enter 1 for Savings Account and Enter 2 for Checkings Account");
+        		int resp = scanner.nextInt();
+        		
+        		if (resp == 1)
+        		{
+        			SavingsAccount.promptWithdraw();
+ 
+        		}
+        		
+        		else if (resp == 2)
+        		{
+        			//access Checking Account
+        		}
         	}
         	else if (response == 2)
         	{
@@ -98,7 +112,7 @@ public class debug
         			ConvertCurrency();
         		}
         		else if (answer == 2) {
-        			System.out.println("Thank you.....");
+        			System.out.println("Thank you for using the Currency Converter");
         			System.exit(0);
         		}
         	}
