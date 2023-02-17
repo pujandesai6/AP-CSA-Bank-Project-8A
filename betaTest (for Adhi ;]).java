@@ -133,24 +133,28 @@ class SavingsAccount extends GeneralAccount
 //Prompts
     public static void userMenu()
     {
-        int choice;
+        int choice = 0;
         Scanner sebSmells = new Scanner(System.in);
-        System.out.println("Pick an action from the list: " + menuOptions());
+        
         while(choice != 5) {
+        System.out.println("Pick an action from the list: \n" + menuOptions());
         choice = sebSmells.nextInt();
+        if(choice > 0 && choice < 6)
+        {
         switch (choice) {
             case 1 : createSavingsAccount();
-                break;
+                continue;
             case 2 : promptDeposit();
-                break;
+            	continue;
             case 3 : promptWithdraw();
-                break;
-            case 4 : displayAccountDetails();
-                break;
+            	continue;
+            case 4 : getUserSavings();
+            	continue;
             case 5 : 
-                break;
             }
-            System.out.print("Please pick a valid choice.");
+        }
+        else
+        	System.out.println("Please pick a valid choice");
         }
         
     }
@@ -201,18 +205,6 @@ class SavingsAccount extends GeneralAccount
 		withdrawal = test.nextDouble();
 		
 		SavingsAccount.withdrawSavings(accountIndex, withdrawal);
-    }
-     public static void promptDisplay()
-    {
-        Scanner test = new Scanner(System.in);
-        int accountIndex;
-        
-		SavingsAccount.getUserSavings();
-		System.out.print("\nPick an account # from the list to view: #");
-		accountIndex = test.nextInt();
-		SavingsAccount blank = savingsList.get(accountIndex-1);
-		
-		blank.displaySavings();
     }
     
 //Create Savings Account
