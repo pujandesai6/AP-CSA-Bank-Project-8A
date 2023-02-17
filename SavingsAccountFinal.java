@@ -21,6 +21,37 @@ class SavingsAccount extends GeneralAccount
     }
     
 //Prompts
+    public static void userMenu()
+    {
+        int choice = 0;
+        Scanner sebSmells = new Scanner(System.in);
+        
+        while(choice != 5) {
+        System.out.println("Pick an action from the list: \n" + menuOptions());
+        choice = sebSmells.nextInt();
+        if(choice > 0 && choice < 6)
+        {
+        switch (choice) {
+            case 1 : createSavingsAccount();
+                continue;
+            case 2 : promptDeposit();
+            	continue;
+            case 3 : promptWithdraw();
+            	continue;
+            case 4 : getUserSavings();
+            	continue;
+            case 5 : 
+            }
+        }
+        else
+        	System.out.println("Please pick a valid choice");
+        }
+        
+    }
+    public static String menuOptions()
+    {
+        return "1. Create new savings account\n2. Deposit\n3. Withdraw\n4. View accounts\n5. Exit";
+    }
     public static void promptCreate()
     {
     	Scanner test = new Scanner(System.in);
@@ -35,40 +66,35 @@ class SavingsAccount extends GeneralAccount
     	            SavingsAccount.createSavingsAccount();
     		}
     }
-    
-    public static void promptTransaction()
+    public static void promptDeposit()
     {
-    	Scanner test = new Scanner(System.in);
-    	String ask;
-    	
-    	System.out.print("Would you like to make a Deposit or Withdrawal? [d/w]: ");
-    	ask = test.nextLine();
-    	if(ask.equals("d"))
-    	{
-    		int accountIndex;
-    		double deposit;
-    		SavingsAccount.getUserSavings();
-    		System.out.print("\nPick an account # from the list to deposit into?: #");
-    		accountIndex = test.nextInt();
-    		
-    		System.out.print("\nHow much would you like to deposit?: $");
-    		deposit = test.nextDouble();
-    		
-    		SavingsAccount.depositSavings(accountIndex, deposit);
-    	}
-    	else if(ask.equals("w"))
-    	{
-    		int accountIndex;
-    		double withdrawal;
-    		SavingsAccount.getUserSavings();
-    		System.out.print("\nPick an account # from the list to withdraw from?: #");
-    		accountIndex = test.nextInt();
-    		
-    		System.out.print("\nHow much would you like to withdraw?: $");
-    		withdrawal = test.nextDouble();
-    		
-    		SavingsAccount.withdrawSavings(accountIndex, withdrawal);
-    	}
+        Scanner test = new Scanner(System.in);
+    	int accountIndex;
+		double deposit;
+		
+		SavingsAccount.getUserSavings();
+		System.out.print("\nPick an account # from the list to deposit into: #");
+		accountIndex = test.nextInt();
+		
+		System.out.print("\nHow much would you like to deposit?: $");
+		deposit = test.nextDouble();
+		
+		SavingsAccount.depositSavings(accountIndex, deposit);
+    }
+    public static void promptWithdraw()
+    {
+        Scanner test = new Scanner(System.in);
+        int accountIndex;
+		double withdrawal;
+		
+		SavingsAccount.getUserSavings();
+		System.out.print("\nPick an account # from the list to withdraw from: #");
+		accountIndex = test.nextInt();
+		
+		System.out.print("\nHow much would you like to withdraw?: $");
+		withdrawal = test.nextDouble();
+		
+		SavingsAccount.withdrawSavings(accountIndex, withdrawal);
     }
     
 //Create Savings Account
