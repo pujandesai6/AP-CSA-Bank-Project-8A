@@ -6,12 +6,7 @@ import java.time.LocalDate;
 
 public class betaTest {
     public static void main (String args []) {
-        SavingsAccount.promptCreate();
-        SavingsAccount.promptTransaction();
-        Loan.promptCreate();
-        Loan.promptPay();
-        Loan.getUserLoans();
-        SavingsAccount.getUserSavings();
+        SavingsAccount.userMenu();
     }
 }
 
@@ -136,6 +131,33 @@ class SavingsAccount extends GeneralAccount
     }
     
 //Prompts
+    public static void userMenu()
+    {
+        int choice;
+        Scanner sebSmells = new Scanner(System.in);
+        System.out.println("Pick an action from the list: " + menuOptions());
+        while(choice != 5) {
+        choice = sebSmells.nextInt();
+        switch (choice) {
+            case 1 : createSavingsAccount();
+                break;
+            case 2 : promptDeposit();
+                break;
+            case 3 : promptWithdraw();
+                break;
+            case 4 : displayAccountDetails();
+                break;
+            case 5 : 
+                break;
+            }
+            System.out.print("Please pick a valid choice.");
+        }
+        
+    }
+    public static String menuOptions()
+    {
+        return "1. Create new savings account\n2. Deposit\n3. Withdraw\n4. View accounts\n5. Exit";
+    }
     public static void promptCreate()
     {
     	Scanner test = new Scanner(System.in);
@@ -150,40 +172,47 @@ class SavingsAccount extends GeneralAccount
     	            SavingsAccount.createSavingsAccount();
     		}
     }
-    
-    public static void promptTransaction()
+    public static void promptDeposit()
     {
-    	Scanner test = new Scanner(System.in);
-    	String ask;
-    	
-    	System.out.print("Would you like to make a Deposit or Withdrawal? [d/w]: ");
-    	ask = test.nextLine();
-    	if(ask.equals("d"))
-    	{
-    		int accountIndex;
-    		double deposit;
-    		SavingsAccount.getUserSavings();
-    		System.out.print("\nPick an account # from the list to deposit into?: #");
-    		accountIndex = test.nextInt();
-    		
-    		System.out.print("\nHow much would you like to deposit?: $");
-    		deposit = test.nextDouble();
-    		
-    		SavingsAccount.depositSavings(accountIndex, deposit);
-    	}
-    	else if(ask.equals("w"))
-    	{
-    		int accountIndex;
-    		double withdrawal;
-    		SavingsAccount.getUserSavings();
-    		System.out.print("\nPick an account # from the list to withdraw from?: #");
-    		accountIndex = test.nextInt();
-    		
-    		System.out.print("\nHow much would you like to withdraw?: $");
-    		withdrawal = test.nextDouble();
-    		
-    		SavingsAccount.withdrawSavings(accountIndex, withdrawal);
-    	}
+        Scanner test = new Scanner(System.in);
+    	int accountIndex;
+		double deposit;
+		
+		SavingsAccount.getUserSavings();
+		System.out.print("\nPick an account # from the list to deposit into: #");
+		accountIndex = test.nextInt();
+		
+		System.out.print("\nHow much would you like to deposit?: $");
+		deposit = test.nextDouble();
+		
+		SavingsAccount.depositSavings(accountIndex, deposit);
+    }
+    public static void promptWithdraw()
+    {
+        Scanner test = new Scanner(System.in);
+        int accountIndex;
+		double withdrawal;
+		
+		SavingsAccount.getUserSavings();
+		System.out.print("\nPick an account # from the list to withdraw from: #");
+		accountIndex = test.nextInt();
+		
+		System.out.print("\nHow much would you like to withdraw?: $");
+		withdrawal = test.nextDouble();
+		
+		SavingsAccount.withdrawSavings(accountIndex, withdrawal);
+    }
+     public static void promptDisplay()
+    {
+        Scanner test = new Scanner(System.in);
+        int accountIndex;
+        
+		SavingsAccount.getUserSavings();
+		System.out.print("\nPick an account # from the list to view: #");
+		accountIndex = test.nextInt();
+		SavingsAccount blank = savingsList.get(accountIndex-1);
+		
+		blank.displaySavings();
     }
     
 //Create Savings Account
@@ -257,16 +286,6 @@ class SavingsAccount extends GeneralAccount
     	SavingsAccount account = savingsList.get(x - 1);
     	return account.getBalance();
     }
-    
-    /*
-    public static void monthAdvance()
-    {
-        if(balance >= minimumBalance)
-            monthlyFee = 0.0;
-        
-        balance = balance * (1.0 + Math.pow(interestRate / (double) period, period) - monthlyFee);
-    }
-    */
 }
 
 class Loan
