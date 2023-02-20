@@ -2,7 +2,7 @@ class SavingsAccount extends GeneralAccount
 {
 	private static ArrayList<SavingsAccount> savingsList = new ArrayList<SavingsAccount>();
     
-private int savingsAccountNumber;
+	private int savingsAccountNumber;
     private static double minimumStartingBalance = 50.0;
     
     /* unused interest variables
@@ -17,7 +17,6 @@ private int savingsAccountNumber;
     public SavingsAccount(String accountName, String FullLegalName, double balance)
     {
         super(accountName, FullLegalName, balance);
-        savingsAccountNumber = (int)(Math.random() * 999999999);
     }
     
 //Prompts
