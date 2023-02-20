@@ -2,7 +2,7 @@ class SavingsAccount extends GeneralAccount
 {
 	private static ArrayList<SavingsAccount> savingsList = new ArrayList<SavingsAccount>();
     
-	private int savingsAccountNumber;
+private int savingsAccountNumber;
     private static double minimumStartingBalance = 50.0;
     
     /* unused interest variables
@@ -26,31 +26,49 @@ class SavingsAccount extends GeneralAccount
         int choice = 0;
         Scanner sebSmells = new Scanner(System.in);
         
-        while(choice != 5) {
-        System.out.println("Pick an action from the list: \n" + menuOptions());
-        choice = sebSmells.nextInt();
-        if(choice > 0 && choice < 6)
+        while(choice != 2 && savingsList.size() == 0)
         {
-        switch (choice) {
-            case 1 : createSavingsAccount();
-                continue;
-            case 2 : promptDeposit();
-            	continue;
-            case 3 : promptWithdraw();
-            	continue;
-            case 4 : getUserSavings();
-            	continue;
-            case 5 : 
+        	System.out.println("Pick an action from the list: \n1. Create new savings account\n2. Exit");
+            choice = sebSmells.nextInt();
+            
+            if(choice > 0 && choice < 3)
+            {
+	            switch (choice) 
+	            {
+	                case 1 : createSavingsAccount();
+	                    continue;
+	                case 2 :
+	            }
             }
+            else
+	        	System.out.println("Invalid choice");
         }
-        else
-        	System.out.println("Please pick a valid choice");
+        while(choice != 5 && savingsList.size() > 0) 
+        {
+	        System.out.println("Pick an action from the list: \n" + menuOptions());
+	        choice = sebSmells.nextInt();
+	        
+	        if(choice > 0 && choice < 6)
+	        {
+	        switch (choice) {
+	            case 1 : createSavingsAccount();
+	                continue;
+	            case 2 : promptDeposit();
+	            	continue;
+	            case 3 : promptWithdraw();
+	            	continue;
+	            case 4 : promptDisplay();
+	            	continue;
+	            case 5 : 
+	            }
+	        }
+	        else
+	        	System.out.println("Invalid choice");
         }
-        
     }
     public static String menuOptions()
     {
-        return "1. Create new savings account\n2. Deposit\n3. Withdraw\n4. View accounts\n5. Exit";
+        return "1. Create new savings account\n2. Deposit\n3. Withdraw\n4. View account details\n5. Exit";
     }
     public static void promptCreate()
     {
@@ -69,34 +87,68 @@ class SavingsAccount extends GeneralAccount
     public static void promptDeposit()
     {
         Scanner test = new Scanner(System.in);
-    	int accountIndex;
-		double deposit;
+    	int accountIndex = 0;
+		double deposit = 0;
 		
 		SavingsAccount.getUserSavings();
-		System.out.print("\nPick an account # from the list to deposit into: #");
-		accountIndex = test.nextInt();
+		while(accountIndex < 1 || accountIndex >savingsList.size())
+		{
+			System.out.print("\nPick an account # from the list to deposit into: #");
+			accountIndex = test.nextInt();
+			if(accountIndex < 1 || accountIndex >savingsList.size())
+				System.out.println("Invalid choice");
+		}
 		
-		System.out.print("\nHow much would you like to deposit?: $");
+		while(deposit <= 0)
+		{
+		System.out.println("\nHow much would you like to deposit?: $");
 		deposit = test.nextDouble();
+		if(deposit <= 0)
+			System.out.println("Invalid amount");
+		}
 		
 		SavingsAccount.depositSavings(accountIndex, deposit);
     }
     public static void promptWithdraw()
     {
         Scanner test = new Scanner(System.in);
-        int accountIndex;
-		double withdrawal;
+        int accountIndex = 0;
+		double withdrawal = 0.0;
 		
 		SavingsAccount.getUserSavings();
-		System.out.print("\nPick an account # from the list to withdraw from: #");
-		accountIndex = test.nextInt();
-		
-		System.out.print("\nHow much would you like to withdraw?: $");
+		while(accountIndex < 1 || accountIndex >savingsList.size())
+		{
+			System.out.print("\nPick an account # from the list to withdraw from: #");
+			accountIndex = test.nextInt();
+			if(accountIndex < 1 || accountIndex >savingsList.size())
+				System.out.println("Invalid choice");
+		}
+		while(withdrawal <= 0)
+		{
+		System.out.println("\nHow much would you like to withdraw?: $");
 		withdrawal = test.nextDouble();
+		if(withdrawal <= 0)
+			System.out.println("Invalid amount");
+		}
 		
 		SavingsAccount.withdrawSavings(accountIndex, withdrawal);
     }
-    
+    public static void promptDisplay()
+    {
+    	Scanner test = new Scanner(System.in);
+        int accountIndex = 0;
+		
+		SavingsAccount.getUserSavings();
+		while(accountIndex < 1 || accountIndex >savingsList.size())
+		{
+			System.out.print("\nPick an account # from the list to view: #");
+			accountIndex = test.nextInt();
+			if(accountIndex < 1 || accountIndex >savingsList.size())
+				System.out.println("Invalid choice");
+		}
+		SavingsAccount x = savingsList.get(accountIndex - 1);
+		x.displayAccountDetails();
+    }
 //Create Savings Account
     public static void createSavingsAccount()
     {
@@ -143,14 +195,15 @@ class SavingsAccount extends GeneralAccount
     
     public static void getUserSavings()
     {
+    	System.out.println("=================");
     	int i;
         for(SavingsAccount x : savingsList)
         {
         	i = savingsList.indexOf(x) + 1;
-            System.out.println("\nAccount #" + i + " =====================");
-            x.displayAccountDetails();
+            System.out.println("Account #" + i + ": " + x.getAccountName());
+            System.out.println("Balance: $" + x.getBalance());
+            System.out.println("=================");
         }
-        	System.out.println("================================\n");
     }
     
     public int getSavingsAccountNumber()
