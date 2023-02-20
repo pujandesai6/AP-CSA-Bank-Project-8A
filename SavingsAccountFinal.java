@@ -1,3 +1,8 @@
+public class SavingsTest {
+    public static void main (String args []) {
+        SavingsAccount.userMenu();
+    }
+}
 class SavingsAccount extends GeneralAccount
 {
 	private static ArrayList<SavingsAccount> savingsList = new ArrayList<SavingsAccount>();
