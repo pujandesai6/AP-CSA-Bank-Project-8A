@@ -74,7 +74,7 @@ public class debug
         double convertedAmount = 0.0;
         
         double[] conversions = {0, 0.92, 0.81, 129.27, 0.92, 0.75, 1.41, 1.55, 1.31, 7.81, 6.74, 81.88, 1500.60, 4.27, 54.47, 32.96 };
-        if (currencyChoice > 0 && currencyChoice <= 15) {
+        if (currencyChoice > 0 && currencyChoice < 15) {
         	convertedAmount = conversions[currencyChoice] * amountInDollars;
         	System.out.println("Your converted amount is: " + (double) Math.round(convertedAmount * 1000) / 1000 + currencyChoice);
         	System.out.println();
@@ -100,8 +100,9 @@ public class debug
         		
         		else if (resp == 2)
         		{
-        			//access Checking Account
+        			//CheckingsAccount.promptWithdraw();
         		}
+        		        	
         	}
         	else if (response == 2)
         	{
