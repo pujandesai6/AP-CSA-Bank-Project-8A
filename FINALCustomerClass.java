@@ -188,8 +188,8 @@ public class CustomerClass {
             bw.write("checkingsaccountnumber[2],");
             bw.write("savingsbalance[3],");
             bw.write("checkingsbalance[4],");
-            bw.write("creditcardnum[5],");
-            bw.write("debitcardnum[6],");
+            bw.write("debitcardnum[5],");
+            bw.write("creditcardnum[6],");
             bw.write("creditscore[7],");
         }
         bw.newLine();
