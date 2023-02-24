@@ -36,7 +36,7 @@ public class Loans {
             loantype = "mortgage";
             loans();
         }
-        else if(choice == 4){
+        else if(choice == 5){
             BankMain.menu();
         }
     }
