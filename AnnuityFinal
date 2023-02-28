@@ -60,7 +60,7 @@ public class MyClass {
                   System.out.println("Deleting your account will cancel any future payouts.");
                   System.out.println("Your time will reset on any investments and you will receive your money back into your account.");
                   System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-                  System.out.print("Are you sure you want to delete you account? (y/n): ");
+                  System.out.print("Are you sure you want to delete your account? (y/n): ");
                   String deleteAccount = scan.nextLine();
                   deleteAccount = scan.nextLine();
                  
@@ -191,24 +191,24 @@ public class MyClass {
              
           if (investment % 1 == 0 || investment % 2 == 1) {
              
-             insuranceUno = investment * Math.pow((1 + .04), 1);
-             insuranceDos = investment * Math.pow((1 + .0515), 1);
-             insuranceThree = investment * Math.pow((1 + .038), 2);
+             insuranceUno = Math.round(investment * Math.pow((1 + .04), 1));
+             insuranceDos = Math.round(investment * Math.pow((1 + .0515), 1));
+             insuranceThree = Math.round(investment * Math.pow((1 + .038), 2));
              
               validOption = false;
               while (validOption == false){
              
               if (insuranceChoice == 1) {
                   validOption = true;
-                  System.out.println("Final rounded investment value: $" + Math.round(insuranceUno));
+                  System.out.println("Final rounded investment value: $" + insuranceUno);
                  
               } else if (insuranceChoice == 2) {
                   validOption = true;
-                  System.out.println("Final roundedinvestment value: $" + Math.round(insuranceDos));
+                  System.out.println("Final roundedinvestment value: $" + insuranceDos);
                  
               } else if (insuranceChoice == 3) {
                   validOption = true;
-                  System.out.println("Final roundedinvestment value: $" + Math.round(insuranceThree));
+                  System.out.println("Final roundedinvestment value: $" + insuranceThree);
                  
               } else {
                   System.out.print("Invalid response. Would you like to try again?");
