@@ -1,6 +1,8 @@
 import java.util.*;
 import java.io.*;
 
+//yall dumb af
+
 public class CertificateOfDeposit {
     private static Scanner input = new Scanner(System.in);
 
