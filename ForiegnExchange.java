@@ -127,7 +127,8 @@ public class ForiegnExchange {
         		}
         		else if (answer == 2) {
         			System.out.println("Thank you for using the Currency Converter");
-        			System.exit(0);
+                    System.out.println("--------------------");
+                    BankMain.menu();
         		}
         	}
         	else
